@@ -1,0 +1,270 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    /* colors */
+    --background: #f6f6f6;
+    --foreground: black;
+    /* --color-secondary: #f6f6f6; */
+    --color-primary: #0d6efd;
+    --color-secondary: white;
+    --color-border: #eee;
+
+    /* override colors */
+    --bs-blue: var(--color-primary);
+    --bs-primary: var(--color-primary);
+
+    /* sizing */
+    --body-padding: 32px;
+    --table-cell-padding: 1rem;
+    --border-radius: 8px;
+
+    /* sidebar */
+    --sidebar-width: 250px;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-top: 0;
+    padding-left: 0;
+    background-color: var(--background);
+}
+
+nav {
+    padding: 0 16px;
+    height: 48px;
+    display: none;
+    align-items: center;
+    box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.026);
+}
+
+nav #burger-icon {
+    font-size: 20px;
+    border: none;
+    background-color: transparent;
+}
+
+body>footer,
+#content {
+    margin-left: var(--sidebar-width);
+}
+
+/* Sidebar */
+aside {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    width: var(--sidebar-width);
+    height: 100%;
+    background-color: var(--color-secondary);
+    border: 1px solid var(--color-border);
+}
+
+aside header {
+    gap: 16px;
+    margin: 12px 0;
+    display: flex;
+    align-items: center;
+}
+
+aside header svg {
+    --size: 48px;
+    width: var(--size);
+    height: var(--size);
+}
+
+aside .content ul,
+aside footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    padding: 8px;
+}
+
+aside .content ul li,
+aside footer ul li {
+    display: flex;
+    align-items: center;
+}
+
+aside .content ul li a,
+aside footer ul li a {
+    gap: 8px;
+    width: 100%;
+    padding: 10px .5rem;
+    border-radius: var(--border-radius);
+    display: flex;
+    color: #494949;
+    text-transform: capitalize;
+    text-decoration: none;
+    transition: background-color 200ms;
+}
+
+aside .content ul li a:hover,
+aside footer ul li a:hover {
+    color: white;
+    background-color: var(--color-primary);
+}
+
+.btn,
+aside footer ul li a:hover {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+aside .content ul li a ion-icon,
+aside footer ul li a ion-icon {
+    font-size: 22px;
+}
+
+footer {
+    margin-top: auto;
+    display: block;
+}
+
+body>footer {
+    padding: 0 1.5rem;
+    font-size: 12px;
+    background-color: var(--background) !important;
+}
+
+body>footer p {
+    margin: 0;
+}
+
+/* End Sidebar */
+
+
+/* utils */
+.sectionTitle {
+    margin: 1rem 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.sectionTitle small {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
+.card {
+    border-radius: 1rem;
+    border-color: var(--color-border);
+}
+
+.table thead tr {
+    --bs-table-bg: var(--color-secondary) !important;
+}
+
+.table thead tr th {
+    font-weight: normal;
+}
+
+.table tr td,
+.table tr th {
+    border-color: var(--color-border);
+    padding: .55rem var(--table-cell-padding) !important;
+}
+
+.table thead tr:first-child {
+    border-bottom: none !important;
+}
+
+/* datatable */
+.dataTables_filter {
+    margin-bottom: 1rem;
+    float: unset !important;
+}
+
+/* .table thead tr th:first-child {
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+}
+
+.table thead tr th:last-child {
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+} */
+
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+}
+
+.status-success {
+    background: #e1f7e3;
+    color: #2ecc71;
+}
+
+.status-warning {
+    background: #fff3e0;
+    color: #f39c12;
+}
+
+.status-danger {
+    background: #ffe0e0;
+    color: #f31212;
+}
+
+/* override bootstrap style */
+.modal-backdrop {
+    --bs-backdrop-bg: #ffffff2b;
+    --bs-backdrop-opacity: 1;
+    background-color: var(--bs-backdrop-bg);
+    backdrop-filter: blur(4px);
+}
+
+/* override select2 style */
+.select2-container .select2-selection--single {
+    height: 38px;
+    padding: 6px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 24px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 36px;
+}
+
+/* Media Query */
+@media (width <=768px) {
+    nav {
+        top: 0;
+        z-index: 98;
+        display: flex;
+        position: sticky;
+        background-color: var(--background);
+    }
+
+    aside {
+        z-index: 99;
+        right: -100vw;
+        box-shadow: -4px 0px 40px rgba(0, 0, 0, 0.205);
+        transition: all 200ms;
+    }
+
+    aside.show {
+        right: 0;
+    }
+
+    body>footer,
+    #content {
+        margin-left: 0;
+    }
+
+}
