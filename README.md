@@ -4,11 +4,11 @@ the project is developed in laravel, to solve the Attendance system of Arreta.
 
 ## How to Run
 - Install `Herd` or `composer` and setup laravel then install `nodejs`.
-- Rename `.env.example` to `.env`.
-- Setup Database in `.env`.
+- Rename `.env.example` to `.env` file.
+- Setup Database configuration in `.env` file.
 
 ```bash
-git clone git clone https://github.com/MuhammadKalimullahkhan/arreta-attendence.git
+git clone https://github.com/MuhammadKalimullahkhan/arreta-attendence.git
 cd arreta-attenence
 npm install && npm build
 composer install
