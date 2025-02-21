@@ -14,6 +14,7 @@ $table->unsignedBigInteger('CompanyID');
 $table->unsignedBigInteger('EntryUserID');
 $table->timestamp('EntryDate')->useCurrent();
 $table->boolean('IsActive')->default(true);
+$table->timestamps();
 });
 
 Schema::create('roles', function (Blueprint $table) {
@@ -23,6 +24,7 @@ $table->unsignedBigInteger('CompanyID');
 $table->unsignedBigInteger('EntryUserID');
 $table->timestamp('EntryDate')->useCurrent();
 $table->boolean('IsActive')->default(true);
+$table->timestamps();
 });
 
 Schema::create('designations', function (Blueprint $table) {
@@ -32,6 +34,7 @@ $table->unsignedBigInteger('CompanyID');
 $table->unsignedBigInteger('EntryUserID');
 $table->timestamp('EntryDate')->useCurrent();
 $table->boolean('IsActive')->default(true);
+$table->timestamps();
 });
 
 Schema::create('users', function (Blueprint $table) {
@@ -40,10 +43,6 @@ Schema::create('users', function (Blueprint $table) {
     $table->string('email')->unique();
     $table->timestamp('email_verified_at')->nullable();
     $table->string('password');
-    $table->rememberToken();
-    $table->timestamps();
-
-
     $table->string('cnic')->unique();
     $table->string('contact')->nullable();
     $table->foreignId('departmentId')->nullable()->constrained('departments')->nullOnDelete();
@@ -53,6 +52,8 @@ Schema::create('users', function (Blueprint $table) {
     $table->unsignedBigInteger('EntryUserID');
     $table->timestamp('EntryDate')->useCurrent();
     $table->boolean('IsActive')->default(true);
+    $table->timestamps();
+    $table->rememberToken();
 });
 
 Schema::create('attendances', function (Blueprint $table) {
@@ -68,6 +69,7 @@ $table->unsignedBigInteger('CompanyID');
 $table->unsignedBigInteger('EntryUserID');
 $table->timestamp('EntryDate')->useCurrent();
 $table->boolean('IsActive')->default(true);
+$table->timestamps();
 });
 
 Schema::create('leaves', function (Blueprint $table) {
@@ -84,6 +86,7 @@ $table->unsignedBigInteger('CompanyID');
 $table->unsignedBigInteger('EntryUserID');
 $table->timestamp('EntryDate')->useCurrent();
 $table->boolean('IsActive')->default(true);
+$table->timestamps();
 });
 
 Schema::create('employee_salary_setups', function (Blueprint $table) {
@@ -95,6 +98,7 @@ $table->unsignedBigInteger('CompanyID');
 $table->unsignedBigInteger('EntryUserID');
 $table->timestamp('EntryDate')->useCurrent();
 $table->boolean('IsActive')->default(true);
+$table->timestamps();
 });
 
 Schema::create('ref_pay_heads', function (Blueprint $table) {
@@ -106,6 +110,7 @@ $table->unsignedBigInteger('CompanyID');
 $table->unsignedBigInteger('EntryUserID');
 $table->timestamp('EntryDate')->useCurrent();
 $table->boolean('IsActive')->default(true);
+$table->timestamps();
 });
 
 Schema::create('ref_pay_head_types', function (Blueprint $table) {
@@ -115,6 +120,7 @@ $table->unsignedBigInteger('CompanyID');
 $table->unsignedBigInteger('EntryUserID');
 $table->timestamp('EntryDate')->useCurrent();
 $table->boolean('IsActive')->default(true);
+$table->timestamps();
 });
 }
 

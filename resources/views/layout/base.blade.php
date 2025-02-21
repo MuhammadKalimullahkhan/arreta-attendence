@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>Wazar Solutions & Services</title>
 
     <!-- styling -->
@@ -31,10 +33,14 @@
       nomodule
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
     ></script>
+    {{-- Select 2 --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    <!-- custom JS -->
-    <script defer src="/js/app.js"></script>
+    {{-- HTMX --}}
+    <script src="https://unpkg.com/htmx.org@1.9.5"></script>
+
+    {{-- Sweet Alert --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
 
   <body>
@@ -148,5 +154,13 @@
         Developed By <a href="https://wazar.pk/" target="_blank">Wazar SS</a>
       </p>
     </footer>
+
+    <script src="/js/app.js"></script>
+    <script>
+      document.body.addEventListener('htmx:configRequest', (event) => {
+          event.detail.headers['X-CSRF-TOKEN'] = "{{ csrf_token() }}";
+      });
+      </script>
+      
   </body>
 </html>

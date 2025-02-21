@@ -1,14 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DepartmentController;
+
 // dashboard
 Route::get('/', function () {
     return view('dashboard');
-});
-
-// Departments
-Route::get('/departments', function () {
-    return view('departments');
 });
 
 // Users
@@ -46,4 +43,11 @@ Route::get('designation', function (){
 });
 Route::get('leave', function (){
     return view('leave');
+});
+
+Route::prefix('/departments')->group(function (){
+    Route::get('/', [DepartmentController::class, 'list'])->name('departments.list');;
+    Route::post('/', [DepartmentController::class, 'create'])->name('departments.create');;
+    Route::put('/{id}', [DepartmentController::class, 'edit'])->name('departments.edit');;
+    Route::delete('/{id}', [DepartmentController::class, 'delete'])->name('departments.delete');;
 });
