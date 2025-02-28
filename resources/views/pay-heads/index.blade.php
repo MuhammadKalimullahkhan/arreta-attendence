@@ -1,5 +1,4 @@
 @extends('layout.base')
-
 @section('mainContent')
 
 <section class="row">
