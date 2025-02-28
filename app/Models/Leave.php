@@ -8,6 +8,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Leave extends Model
 {
     use HasFactory;
-    protected $fillable = ['employeeId', 'designationId', 'leaveTypeId', 'fromDate', 'numberOfDays', 'approval', 'approvalDate', 'isWithoutPay', 'CompanyID', 'EntryUserID', 'EntryDate', 'IsActive'];
+
+    protected $fillable = [
+        'employee_id',
+        'designation_id',
+        'leave_type_id',
+        'from_date',
+        'number_of_days',
+        'approval',
+        'approval_date',
+        'is_without_pay',
+        'company_id',
+        'entry_user_id',
+        'entry_date',
+        'is_active',
+    ];
 }
 

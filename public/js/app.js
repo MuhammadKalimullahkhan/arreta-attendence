@@ -22,8 +22,15 @@ $(document).ready(function () {
     }); // Initialize DataTable
 });
 
-// sweet alerts
+// Select 2 Dropdown
+$(document).ready(function () {
+    $(".select2").select2({
+        width: "100%",
+        dropdownParent: $(".modal"),
+    });
+});
 
+// sweet alerts
 function myAlert(title, message, icon) {
     Swal.fire({
         title,

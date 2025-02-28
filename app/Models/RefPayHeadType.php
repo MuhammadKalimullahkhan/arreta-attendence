@@ -8,5 +8,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class RefPayHeadType extends Model
 {
     use HasFactory;
-    protected $fillable = ['Description', 'CompanyID', 'EntryUserID', 'EntryDate', 'IsActive'];
+    protected $fillable = [
+        'description',
+        'company_id',
+        'entry_user_id',
+        'entry_date',
+        'is_active',
+    ];
 }

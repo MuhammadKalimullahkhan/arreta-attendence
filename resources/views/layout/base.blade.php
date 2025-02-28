@@ -41,6 +41,7 @@
 
     {{-- Sweet Alert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   </head>
 
   <body>
@@ -161,6 +162,7 @@
           event.detail.headers['X-CSRF-TOKEN'] = "{{ csrf_token() }}";
       });
       </script>
-      
+
+  @yield('scripts')
   </body>
 </html>

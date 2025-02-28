@@ -8,7 +8,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Department extends Model
 {
     use HasFactory;
-    protected $fillable = ['description', 'CompanyID', 'EntryUserID', 'EntryDate', 'IsActive'];
+    protected $fillable = [
+        'description',
+        'company_id',
+        'entry_user_id',
+        'entry_date',
+        'is_active',
+    ];
 
     protected function casts(): array
     {

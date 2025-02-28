@@ -2,92 +2,81 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Models\Department;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
-    function createTR($department){
-        return "<tr id=\"department-{$department->id}\">
-                    <td>{$department->description}</td>
-                    <td>" . \Carbon\Carbon::parse($department->created_at)->format('d-m-Y') . "</td>
-                    <td>" . \Carbon\Carbon::parse($department->updated_at)->format('d-m-Y') . "</td>
-                    <td>
-                                            <div class=\"dropdown\">
-                                                <button class=\"btn btn-primary dropdown-toggle\" type=\"button\"
-                                                    data-bs-toggle=\"dropdown\">Actions</button>
-                                                <ul class=\"dropdown-menu\">
-                                                    <li>
-                                                        <button class=\"dropdown-item text-success\"
-                                                            onclick=\"editDepartment($department->id, '$department->description')\">
-                                                            <ion-icon name=\"create-outline\"></ion-icon> Edit
-                                                        </button>
+    public function index()
+    {
+        $departments = Department::where("is_active", true)->get();
 
-                                                    </li>
-                                                    <li>
-                                                        <button class=\"dropdown-item text-danger\"
-                                                            hx-delete=\"/departments/$department->id/\"
-                                                            hx-target=\"closest tr\"
-                                                            hx-on::confirm=\"return confirmAlert(event);\"
-                                                            hx-on::after-request=\"successAlert('Deleted', 'Department has been deleted.')\">Delete</button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                </tr>";
+        return view('departments', compact('departments'));
     }
 
-    function list(){
-        $departments=Department::get();
-        return view('departments', ['departments'=>$departments]);
-        
-    }
-
-    public function create(Request $request){
-        $request->validate([
-            'description' => 'required|string|max:255',
-        ]);
-    
-        $department = Department::create([
-            'description' => $request->description,
-            'CompanyID' => 1, // Change this based on actual input
-            'EntryUserID' => auth()->id() ?? 1, // Get authenticated user or default
-            'EntryDate' => now(),
-            'IsActive' => 1,
-        ]);
-    
-        return response()->json([
-            'success' => true,
-            'message' => 'department created successfully.',
-            'html' => $this->createTR($department)
-        ]);
-    }
-    
-    function edit(Request $request, $id){
+    public function store(Request $request): JsonResponse
+    {
         $request->validate([
             'description' => 'required|string|max:255',
         ]);
 
-        $department = Department::findOrFail($id);
-        $department->update([
-            'description' => $request->description,
-        ]);
+        $department = new Department();
+        $department->description = $request->description;
+        $department->company_id = 1;
+        $department->entry_user_id = auth()->id ?? 1;
+        $department->save();
 
-        // return response()->json(['success'=>true,'message' => 'Department updated successfully', 'department' => $department]);
         return response()->json([
             'success' => true,
-            'message' => 'department updated successfully.',
-            'id' => $department->id,
-            'html' => $this->createTR($department)
+            'message' => 'Department created successfully.',
+            'data' => [$department]
         ]);
     }
 
-    public function delete($id){
-        $department = Department::findOrFail($id);
-        $department->delete();
+    public function show(string $id): JsonResponse
+    {
+        $role = Department::where("is_active", true)->findOrFail($id);
+        return response()->json([
+            'success' => true,
+            'data' => [$role]
+        ]);
+    }
+
+    public function update(Request $request, string $id): JsonResponse
+    {
+        $request->validate([
+            'description' => 'required|string|max:255',
+        ]);
+
+        $department = Department::where("is_active", true)->findOrFail($id);
+        if (!$department) return response()->json([
+            'success' => false,
+            'message' => 'invalid request. Department not found.'
+        ], 404);
+
+        $department->description = $request->description;
+        $department->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Department updated successfully.',
+            'data' => [$department]
+        ]);
+    }
+
+    public function destroy(string $id)
+    {
+        $payHead = Department::where("is_active", true)->find($id);
+
+        if (!$payHead) return response()->json([
+            'success' => false,
+            'message' => 'Department not found.'
+        ], 404);
+
+        $payHead->is_active = 0;
+        $payHead->save();
 
         return response('', 200);
     }
-
 }

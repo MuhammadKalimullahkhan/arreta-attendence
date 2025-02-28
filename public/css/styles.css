@@ -167,7 +167,8 @@ body>footer p {
 }
 
 .table thead tr th {
-    font-weight: normal;
+    font-weight: 500;
+    color: var(--bs-gray-700);
 }
 
 .table tr td,
