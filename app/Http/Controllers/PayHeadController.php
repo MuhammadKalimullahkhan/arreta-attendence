@@ -28,6 +28,7 @@ class PayHeadController extends Controller
         $request->validate([
             'payHeadTypeId' => 'required|integer|exists:ref_pay_head_types,id',
             'description' => 'required|string|max:50|regex:/^[a-zA-Z\s]+$/',
+            'isEditable'=> "nullable|boolean"
         ]);
 
         // find the pay-head type

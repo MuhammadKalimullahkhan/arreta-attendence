@@ -25,12 +25,13 @@
                             Head Type
                             <span class="text-danger">*</span>
                         </label>
-                        <select id="headType" name="payHeadTypeId" class="form-select select2" required>
+                        <select id="headType" name="payHeadTypeId" class="form-select select2">
                             <option selected disabled value>Select Pay Head Type</option>
                             @foreach($payHeadTypes as $payHeadType)
                                 <option value="{{$payHeadType->id}}">{{$payHeadType->description}}</option>
                             @endforeach
                         </select>
+                        <div id="error_payHeadTypeId" class="text-danger text-xs"></div>
                     </div>
 
                     <!-- Description Input -->
@@ -44,8 +45,8 @@
                             name="description"
                             placeholder="Enter description"
                             class="form-control"
-                            required
                         />
+                        <div id="error_description"class="text-danger text-xs"></div>
                     </div>
 
                     <!-- Is Editable Checkbox -->

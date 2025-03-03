@@ -91,8 +91,8 @@
                                 name="description"
                                 placeholder="HR"
                                 class="form-control"
-                                required
                             />
+                            <div  id="error_description" class="invalid"></div>
                         </div>
                         <button type="submit" class="btn btn-primary">Add Role</button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
@@ -111,6 +111,7 @@
     <script src="/js/utils.js"></script>
     <script>
         function openModal(id = null) {
+            $("#error_description").text(null)
             if (id) {
                 // Edit mode
                 $('.modal .modal-title').text('Edit Designation');
@@ -151,8 +152,15 @@
                     }
                 },
                 error: function (xhr) {
-                    dangerAlert("Failed", "Failed to update/create.");
-                    console.log(xhr.responseText);
+                    if (xhr.status === 422) {
+                        let errors = xhr.responseJSON.errors;
+                        for (let field in errors) {
+                            $(`#error_${field}`).text(errors[field][0]);
+                        }
+                    } else {
+                        console.log(xhr.responseText);
+                        dangerAlert("Failed", "Failed to update the role.")
+                    }
                 }
             });
         });
