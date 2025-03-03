@@ -131,6 +131,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('emp_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('pay_head_id')->constrained('ref_pay_heads')->cascadeOnDelete();
+            $table->foreignId('pay_head_type_id')->constrained('ref_pay_head_types')->cascadeOnDelete();
             $table->decimal('amount', 10, 2);
             $table->foreignId('company_id')->constrained('companies')->cascadeOnDelete();
             $table->unsignedBigInteger('entry_user_id');

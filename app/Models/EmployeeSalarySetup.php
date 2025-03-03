@@ -12,6 +12,7 @@ class EmployeeSalarySetup extends Model
     protected $fillable = [
         'emp_id',
         'pay_head_id',
+        'pay_head_type_id',
         'amount',
         'company_id',
         'entry_user_id',

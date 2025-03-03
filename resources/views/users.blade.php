@@ -1,5 +1,4 @@
 @extends('layout.base')
-
 @section('mainContent')
     <section class="row">
         <div
@@ -13,8 +12,7 @@
             <button
                 type="button"
                 class="btn btn-primary btn-sm"
-                data-bs-toggle="modal"
-                data-bs-target="#upsertModal"
+                onclick="openModal(null)"
             >
                 Add Employee
             </button>
@@ -131,23 +129,25 @@
                             class="tab-pane fade show active"
                             id="initialInfo"
                             role="tabpanel"
-                            aria-labelledby="initialInfo-tab"
-                        >
+                            aria-labelledby="initialInfo-tab">
                             <div class="card">
                                 <div class="card-body">
                                     <form action="">
-                                        <input type="hidden" id="currentId" />
+                                        <input type="hidden" id="currentId"/>
                                         <div class="row g-3">
                                             <div class="col-12 col-lg-6">
-                                                <label for="tb_name" class="form-label"
-                                                >Name&nbsp;<span class="text-danger">*</span></label
-                                                >
+                                                <label for="tb_name" class="form-label">
+                                                    Name&nbsp;
+                                                    <span class="text-danger">*</span>
+                                                </label>
                                                 <input
                                                     id="tb_name"
                                                     type="text"
                                                     class="form-control"
-                                                    placeholder="Niaz Ali"
-                                                />
+                                                    placeholder="Niaz Ali"/>
+                                                @error('initialInfo.name')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                             <div class="col-12 col-lg-6">
                                                 <label for="tb_cnic" class="form-label"
@@ -393,6 +393,8 @@
 @endsection
 
 @section('scripts')
+    <script src="/js/utils.js"></script>
+
     <script>
         const payrollSetup = [];
         const leaveQuota = [];
@@ -423,6 +425,13 @@
                         const user = formatObject(response.data[0]);
 
                         // populate values to the users modal
+                        // initial info
+                        $("#tb_name").val(user.name);
+                        $("#tb_cnic").val(user.cnic);
+                        $("#tb_contact").val(user.contact);
+                        $("#dd_department").val(user.department_id).trigger('change');
+                        $("#dd_role").val(user.role_id).trigger('change');
+                        $("#dd_designation").val(user.designation_id).trigger('change');
                     }
                 });
             } else {
@@ -449,9 +458,6 @@
                 url: url,
                 type: method,
                 data: formData,
-                headers:{
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
                 success: function (response) {
                     if (response.success) {
                         $('#upsertModal').modal('hide');
@@ -460,7 +466,7 @@
                 },
                 error: function (xhr) {
                     dangerAlert("Failed", "Failed to update/create.");
-                    console.log(xhr.responseText);
+                    console.error(xhr.responseText);
                 }
             });
         }
