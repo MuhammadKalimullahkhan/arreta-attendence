@@ -117,6 +117,7 @@
                     }
                 },
                 error: function (xhr) {
+                    dangerAlert("Failed", "Failed to update/create.");
                     console.log(xhr.responseText);
                 }
             });

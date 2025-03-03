@@ -75,52 +75,52 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/attendance">
+                    <a href="{{ route('attendances.index') }}">
                         <ion-icon name="calendar-outline"></ion-icon>
                         attandance
                     </a>
                 </li>
                 <li>
-                    <a href="leave">
+                    <a href="{{ route('attendances.index') }}">
                         <ion-icon name="newspaper-outline"></ion-icon>
                         leave
                     </a>
                 </li>
                 <li>
-                    <a href="users">
+                    <a href="{{ route('users.index') }}">
                         <ion-icon name="people-outline"></ion-icon>
                         users
                     </a>
                 </li>
                 <li>
-                    <a href="./departments">
+                    <a href="{{ route('departments.index') }}">
                         <ion-icon name="business-outline"></ion-icon>
                         departments
                     </a>
                 </li>
                 <li>
-                    <a href="./designation">
+                    <a href="{{ route('designations.index') }}">
                         <ion-icon name="prism-outline"></ion-icon>
                         designation
                     </a>
                 </li>
                 <li>
-                    <a href="./roles">
+                    <a href="{{ route('roles.index') }}">
                         <ion-icon name="lock-closed-outline"></ion-icon>
                         Roles
                     </a>
                 </li>
                 <li>
-                    <a href="./payhead">
+                    <a href="{{ route('pay-heads.index') }}">
                         <ion-icon name="cash-outline"></ion-icon>
                         Payhead
                     </a>
                 </li>
                 <li>
-                    <a href="reports">
+                    {{-- <a href="{{ route('reports.index') }}">
                         <ion-icon name="document-text-outline"></ion-icon>
                         reports
-                    </a>
+                    </a> --}}
                 </li>
             </ul>
         </div>

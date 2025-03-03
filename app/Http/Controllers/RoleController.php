@@ -18,7 +18,8 @@ class RoleController extends Controller
     public function store(Request $request): JsonResponse
     {
         $request->validate([
-            'description' => 'required|string|max:255',
+            'description' => 'required|string|max:50|regex:/^[a-zA-Z\s]+$/',
+
         ]);
 
         $newRole = new Role();
@@ -43,17 +44,19 @@ class RoleController extends Controller
         ]);
     }
 
-    public function update(Request $request, string $id):JsonResponse
+    public function update(Request $request, string $id): JsonResponse
     {
         $request->validate([
-            'description' => 'required|string|max:255',
+            'description' => 'required|string|max:50|regex:/^[a-zA-Z\s]+$/',
+
         ]);
 
         $role = Role::where("is_active", true)->findOrFail($id);
-        if (!$role) return response()->json([
-            'success' => false,
-            'message' => 'invalid request. "Role" not found.'
-        ], 404);
+        if (!$role)
+            return response()->json([
+                'success' => false,
+                'message' => 'invalid request. "Role" not found.'
+            ], 404);
 
         $role->description = $request->description;
         $role->save();
@@ -69,10 +72,11 @@ class RoleController extends Controller
     {
         $payHead = Role::where("is_active", true)->find($id);
 
-        if (!$payHead) return response()->json([
-            'success' => false,
-            'message' => '"Role" not found.'
-        ], 404);
+        if (!$payHead)
+            return response()->json([
+                'success' => false,
+                'message' => '"Role" not found.'
+            ], 404);
 
         $payHead->is_active = 0;
         $payHead->save();

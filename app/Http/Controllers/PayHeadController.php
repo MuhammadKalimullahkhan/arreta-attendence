@@ -27,7 +27,7 @@ class PayHeadController extends Controller
     {
         $request->validate([
             'payHeadTypeId' => 'required|integer|exists:ref_pay_head_types,id',
-            'description' => 'required|string|max:255',
+            'description' => 'required|string|max:50|regex:/^[a-zA-Z\s]+$/',
         ]);
 
         // find the pay-head type
@@ -71,7 +71,7 @@ class PayHeadController extends Controller
     {
         $request->validate([
             'payHeadTypeId' => 'required|integer|exists:ref_pay_head_types,id',
-            'description' => 'required|string|max:255',
+            'description' => 'required|string|max:50|regex:/^[a-zA-Z\s]+$/',
         ]);
 
         $payHead = RefPayHead::where("is_active", true)->findOrFail($id);
