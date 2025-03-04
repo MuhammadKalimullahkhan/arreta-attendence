@@ -16,6 +16,6 @@ Route::get('/', function () {
 Route::resource('/attendance', AttendanceController::class)->names('attendances');
 Route::resource('/users', UserController::class)->names('users');
 Route::resource("/departments", DepartmentController::class)->names("departments");
-Route::resource("/pay-heads", PayHeadController::class)->names("pay-heads");
-Route::resource("/roles", RoleController::class)->names("roles");
 Route::resource("/designation", DesignationController::class)->names("designations");
+Route::resource("/roles", RoleController::class)->names("roles");
+Route::resource("/pay-heads", PayHeadController::class)->names("pay-heads");

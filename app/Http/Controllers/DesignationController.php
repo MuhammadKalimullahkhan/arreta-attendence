@@ -16,13 +16,10 @@ class DesignationController extends Controller
     }
 
     public function store(Request $request): JsonResponse
-      {
+    {
         $request->validate([
-
-            'description' => ['required', 'string', 'max:20', 'regex:/^[A-Za-z\s]+$/'],
-      ]);
-
-
+            'description' => 'required|string|max:255',
+        ]);
 
         $newDesignation = new Designation();
         $newDesignation->description = $request->description;
@@ -46,18 +43,18 @@ class DesignationController extends Controller
         ]);
     }
 
-    public function update(Request $request, string $id):JsonResponse
+    public function update(Request $request, string $id): JsonResponse
     {
         $request->validate([
-            'description' => ['required', 'string', 'max:20', 'regex:/^[A-Za-z\s]+$/'],
-
+            'description' => 'required|string|max:255',
         ]);
 
         $role = Designation::where("is_active", true)->findOrFail($id);
-        if (!$role) return response()->json([
-            'success' => false,
-            'message' => 'invalid request. "Designation" not found.'
-        ], 404);
+        if (!$role)
+            return response()->json([
+                'success' => false,
+                'message' => 'invalid request. "Designation" not found.'
+            ], 404);
 
         $role->description = $request->description;
         $role->save();
@@ -73,10 +70,11 @@ class DesignationController extends Controller
     {
         $payHead = Designation::where("is_active", true)->find($id);
 
-        if (!$payHead) return response()->json([
-            'success' => false,
-            'message' => '"Designation" not found.'
-        ], 404);
+        if (!$payHead)
+            return response()->json([
+                'success' => false,
+                'message' => '"Designation" not found.'
+            ], 404);
 
         $payHead->is_active = 0;
         $payHead->save();

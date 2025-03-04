@@ -18,7 +18,7 @@ class DepartmentController extends Controller
     public function store(Request $request): JsonResponse
     {
         $request->validate([
-            'description' => 'required|string|max:255',
+            'description' => 'required|string|max:50|min:1|regex:/^[A-Za-z\s]+$/',
         ]);
 
         $department = new Department();
@@ -46,7 +46,8 @@ class DepartmentController extends Controller
     public function update(Request $request, string $id): JsonResponse
     {
         $request->validate([
-            'description' => 'required|string|max:255',
+            'description' => 'required|string|max:50|min:1|regex:/^[A-Za-z\s]+$/',
+
         ]);
 
         $department = Department::where("is_active", true)->findOrFail($id);

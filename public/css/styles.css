@@ -145,6 +145,10 @@ body>footer p {
 
 
 /* utils */
+.invalid{
+    color: #f31212;
+    font-size: 14px;
+}
 .sectionTitle {
     margin: 1rem 0;
     font-size: 1.2rem;
