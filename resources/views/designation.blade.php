@@ -49,7 +49,7 @@
     </section>
     <!-- Modals -->
     <!-- Add Designation Modal -->
-    <div class="modal fade" id="upsertModal" tabindex="-1" aria-labelledby="upsertModalLabel" aria-hidden="true">
+    <div class="modal fade parent" id="upsertModal" tabindex="-1" aria-labelledby="upsertModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

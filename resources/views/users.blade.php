@@ -48,7 +48,8 @@
 
     <!-- Modals -->
     <!-- Add Employee Modal -->
-    <div class="modal fade parent" id="upsertModal" tabindex="-1" aria-labelledby="upsertModalLabel" aria-hidden="true">
+    <div class="modal fade parent parent" id="upsertModal" tabindex="-1" aria-labelledby="upsertModalLabel"
+        aria-hidden="true">
         <div class="modal-lg modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
