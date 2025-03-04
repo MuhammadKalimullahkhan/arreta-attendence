@@ -26,7 +26,9 @@
                             <span class="text-danger">*</span>
                         </label>
                         <select id="headType" name="payHeadTypeId" class="form-select select2" required>
-                            <option selected disabled value>Select Pay Head Type</option>
+                            <option selected disabled value>
+                                Select Pay Head Type
+                            </option>
                             @foreach($payHeadTypes as $payHeadType)
                                 <option value="{{$payHeadType->id}}">{{$payHeadType->description}}</option>
                             @endforeach

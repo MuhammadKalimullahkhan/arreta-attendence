@@ -16,10 +16,13 @@ class DesignationController extends Controller
     }
 
     public function store(Request $request): JsonResponse
-    {
+      {
         $request->validate([
-            'description' => 'required|string|max:255',
-        ]);
+
+            'description' => ['required', 'string', 'max:20', 'regex:/^[A-Za-z\s]+$/'],
+      ]);
+
+
 
         $newDesignation = new Designation();
         $newDesignation->description = $request->description;
@@ -46,7 +49,8 @@ class DesignationController extends Controller
     public function update(Request $request, string $id):JsonResponse
     {
         $request->validate([
-            'description' => 'required|string|max:255',
+            'description' => ['required', 'string', 'max:20', 'regex:/^[A-Za-z\s]+$/'],
+
         ]);
 
         $role = Designation::where("is_active", true)->findOrFail($id);

@@ -87,7 +87,7 @@ class UserController extends Controller
         // Create Employee Salary Setup
         foreach ($request->payrollSetup as $payroll) {
             EmployeeSalarySetup::create([
-                'emp_id' => $user->id,
+                'employee_id' => $user->id,
                 'pay_head_id' => $payroll["payHead"],
                 'pay_head_type_id' => $payroll["headType"],
                 'amount' => $payroll["amount"],
@@ -119,37 +119,36 @@ class UserController extends Controller
 
     public function show(string $id): JsonResponse
     {
-        $role = User::where("is_active", true)
-            ->findOrFail($id)
-            ->load('role')
-            ->load('designation')
-            ->load('department');
+        $user = User::where("is_active", true)
+            ->with([
+                'department',
+                'role',
+                'designation',
+                'payrollSetup',
+                'leaveQuota'
+            ])
+            ->findOrFail($id);
 
         return response()->json([
             'success' => true,
-            'data' => [$role]
+            'data' => [$user]
         ]);
     }
 
     public function update(Request $request, string $id): JsonResponse
     {
-        // Validate the incoming request
+        // Validate the request
         $validator = $request->validate([
-            // Validate the initialInfo object
             'initialInfo.name' => 'required|string',
-            'initialInfo.cnic' => 'required|digits:13', // CNIC should be 13 digits
-            'initialInfo.contact' => 'required|digits:11', // Assuming the contact is a 11-digit number
+            'initialInfo.cnic' => 'required|digits:13',
+            'initialInfo.contact' => 'required|digits:11',
             'initialInfo.department' => 'required|integer|exists:departments,id',
             'initialInfo.role' => 'required|integer|exists:roles,id',
             'initialInfo.designation' => 'required|integer|exists:designations,id',
-
-            // Validate the leave array
             'payrollSetup' => 'required|array',
             'payrollSetup.*.payHead' => 'required|integer|exists:ref_pay_heads,id',
             'payrollSetup.*.headType' => 'required|integer|exists:ref_pay_head_types,id',
             'payrollSetup.*.amount' => 'required|numeric',
-
-            // Validate the leaveQuota array
             'leaveQuota' => 'required|array',
             'leaveQuota.*.leaveType' => 'required|integer|exists:leave_types,id',
             'leaveQuota.*.days' => 'required|integer',
@@ -158,7 +157,7 @@ class UserController extends Controller
         DB::beginTransaction();
 
         try {
-            // Find the user and update
+            // Find user and update details
             $user = User::findOrFail($id);
             $user->update([
                 'name' => $request->initialInfo['name'],
@@ -171,11 +170,17 @@ class UserController extends Controller
                 'entry_user_id' => auth()->id() ?? 1,
             ]);
 
-            // Update or insert Employee Salary Setup
+            // 🔹 **Remove payroll setups not present in request**
+            $payrollIds = collect($request->payrollSetup)->pluck('payHead')->toArray();
+            EmployeeSalarySetup::where('employee_id', $user->id)
+                ->whereNotIn('pay_head_id', $payrollIds)
+                ->delete();
+
+            // 🔹 **Update or insert Employee Salary Setup**
             foreach ($request->payrollSetup as $payroll) {
                 EmployeeSalarySetup::updateOrCreate(
                     [
-                        'emp_id' => $user->id,
+                        'employee_id' => $user->id,
                         'pay_head_id' => $payroll["payHead"],
                     ],
                     [
@@ -187,7 +192,13 @@ class UserController extends Controller
                 );
             }
 
-            // Update or insert Leave Quota
+            // 🔹 **Remove leave quotas not present in request**
+            $leaveIds = collect($request->leaveQuota)->pluck('leaveType')->toArray();
+            Leave::where('employee_id', $user->id)
+                ->whereNotIn('leave_type_id', $leaveIds)
+                ->delete();
+
+            // 🔹 **Update or insert Leave Quota**
             foreach ($request->leaveQuota as $leave) {
                 Leave::updateOrCreate(
                     [
@@ -220,9 +231,10 @@ class UserController extends Controller
         }
     }
 
+
     public function destroy(string $id)
     {
-//        $user = User::where("is_active", true)->find($id);
+        //        $user = User::where("is_active", true)->find($id);
 //
 //        if (!$user) return response()->json([
 //            'success' => false,

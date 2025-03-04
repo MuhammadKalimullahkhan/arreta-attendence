@@ -57,6 +57,7 @@ return new class extends Migration {
             $table->foreignId('company_id')->constrained('companies')->cascadeOnDelete();
             $table->unsignedBigInteger('entry_user_id')->constrained('users')->cascadeOnDelete();
             $table->timestamp('entry_date')->useCurrent();
+            $table->timestamp('deleted_at');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
             $table->rememberToken();
@@ -129,7 +130,7 @@ return new class extends Migration {
 
         Schema::create('employee_salary_setups', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('emp_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('employee_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('pay_head_id')->constrained('ref_pay_heads')->cascadeOnDelete();
             $table->foreignId('pay_head_type_id')->constrained('ref_pay_head_types')->cascadeOnDelete();
             $table->decimal('amount', 10, 2);

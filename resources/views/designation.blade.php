@@ -93,6 +93,7 @@
                                 class="form-control"
                                 required
                             />
+                            <div id="error" class="text-danger text-sm"></div>
                         </div>
                         <button type="submit" class="btn btn-primary">Add Role</button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
@@ -111,6 +112,8 @@
     <script src="/js/utils.js"></script>
     <script>
         function openModal(id = null) {
+            $("#error").text(null)
+
             if (id) {
                 // Edit mode
                 $('.modal .modal-title').text('Edit Designation');
@@ -152,7 +155,11 @@
                 },
                 error: function (xhr) {
                     dangerAlert("Failed", "Failed to update/create.");
-                    console.log(xhr.responseText);
+
+                    const responseBody = JSON.parse(xhr.responseText)
+                    if(responseBody?.errors){
+                        $("#error").text(responseBody.errors?.description[0])
+                    }
                 }
             });
         });

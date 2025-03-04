@@ -38,13 +38,28 @@ class User extends Authenticatable
         ];
     }
 
-    public function designation():BelongsTo{
+    public function designation(): BelongsTo
+    {
         return $this->belongsTo(Designation::class, 'designation_id');
     }
-    public function role():BelongsTo{
+    public function role(): BelongsTo
+    {
         return $this->belongsTo(Role::class, 'role_id');
     }
-    public function department():BelongsTo{
+    public function department(): BelongsTo
+    {
         return $this->belongsTo(Department::class, 'department_id');
     }
+
+    // Has Releationships
+    public function payrollSetup()
+    {
+        return $this->hasMany(EmployeeSalarySetup::class, 'employee_id');
+    }
+
+    public function leaveQuota()
+    {
+        return $this->hasMany(Leave::class, 'employee_id');
+    }
+
 }

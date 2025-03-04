@@ -10,7 +10,7 @@ class EmployeeSalarySetup extends Model
     use HasFactory;
 
     protected $fillable = [
-        'emp_id',
+        'employee_id',
         'pay_head_id',
         'pay_head_type_id',
         'amount',
