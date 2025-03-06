@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -35,6 +36,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_active' => 'boolean',
         ];
     }
 
@@ -62,4 +64,21 @@ class User extends Authenticatable
         return $this->hasMany(Leave::class, 'employee_id');
     }
 
+    /**
+     * 🔹 Role Helper Methods (Avoid hardcoded strings in codebase)
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role && strtolower($this->role->description) === UserRole::ADMIN->value;
+    }
+
+    public function isHR(): bool
+    {
+        return $this->role && strtolower($this->role->description) === UserRole::HR->value;
+    }
+
+    public function isEmployee(): bool
+    {
+        return $this->role && strtolower($this->role->description) === UserRole::EMPLOYEE->value;
+    }
 }

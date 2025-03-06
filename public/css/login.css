@@ -19,7 +19,6 @@
     width: 32rem;
     padding: 24px;
     backdrop-filter: blur(20px);
-    background-color: rgba(255, 255, 255, 0.45);
 }
 
 #signupLogin .card .card-img,
@@ -33,9 +32,9 @@
     background-size: cover;
 }
 
-@media (width <= 768px) {
-    .card{
+@media (width <=768px) {
+    .card {
         width: unset !important;
         flex-direction: column !important;
-    }    
+    }
 }
