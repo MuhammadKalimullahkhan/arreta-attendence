@@ -10,7 +10,7 @@
     <tbody>
         <form action="{{ route('attendances.store') }}" method="post" id="myForm">
             @csrf
-            @foreach ($usersWithoutAttendance as $user)
+            @forelse ($usersWithoutAttendance as $user)
                 <tr>
                     {{-- <td>
                 <input type="checkbox" name="employees[]" value="{{ $user->id }}" class="form-check-input"
@@ -26,7 +26,13 @@
                     <td>{{ $user->department->description }}</td>
                     <td>{{ $user->designation->description }}</td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="4">
+                        <small class="d-block text-center text-muted">No employees found.</small>
+                    </td>
+                </tr>
+            @endforelse
         </form>
 
     </tbody>
