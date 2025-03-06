@@ -41,7 +41,7 @@ class AttendanceController extends Controller
                 'year_id' => now()->year,
                 'month_id' => now()->month,
                 'date' => now()->toDateString(),
-                'status' => $status === 'present' ? 'Present' : 'Absent', // Set status dynamically
+                'leave_type_id' => 0, // no leave type
                 'is_present' => $status === 'present', // Convert to boolean
                 'company_id' => $user->company_id,
                 'entry_user_id' => auth()->id() ?? 1,
@@ -90,7 +90,7 @@ class AttendanceController extends Controller
 
         return response()->json([
             'success' => true,
-            "html" => view("partials.attendance-tbody", compact("usersWithoutAttendance"))->render(),
+            "html" => view("partials.attendance-table", compact("usersWithoutAttendance"))->render(),
         ]);
     }
 }

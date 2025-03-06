@@ -40,21 +40,9 @@
                         <div id="error_employees" class="invalid"></div>
                         <div class="col-12 mt-3">
                             <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Present</th>
-                                            <th>Employee</th>
-                                            <th>Department</th>
-                                            <th>Designation</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="usersTableBody">
-                                        @include('partials.attendance-tbody', [
-                                            'usersWithoutAttendance' => $usersWithoutAttendance,
-                                        ])
-                                    </tbody>
-                                </table>
+                                @include('partials.attendance-table', [
+                                    'usersWithoutAttendance' => $usersWithoutAttendance,
+                                ])
                             </div>
                         </div>
                     </div>
@@ -91,7 +79,7 @@
             // Function to update the users table
             function updateUsersTable(response) {
                 if (response?.success) {
-                    $("#usersTableBody").html(response.html);
+                    $("#usersTable").html(response.html);
                 }
             }
 

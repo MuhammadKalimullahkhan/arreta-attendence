@@ -63,22 +63,6 @@ return new class extends Migration {
             $table->rememberToken();
         });
 
-        Schema::create('attendances', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('employee_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('designation_id')->constrained('designations')->cascadeOnDelete();
-            $table->integer('year_id');
-            $table->integer('month_id');
-            $table->date('date');
-            $table->string('status')->nullable();
-            $table->boolean('is_present')->default(false);
-            $table->foreignId('company_id')->constrained('companies')->cascadeOnDelete();
-            $table->unsignedBigInteger('entry_user_id');
-            $table->timestamp('entry_date')->useCurrent();
-            $table->boolean('is_active')->default(true);
-            $table->timestamps();
-        });
-
         Schema::create('leave_types', function (Blueprint $table) {
             $table->id();
             $table->string('description');
@@ -86,6 +70,22 @@ return new class extends Migration {
             $table->unsignedBigInteger('entry_user_id');
             $table->boolean('is_active')->default(true);
             $table->timestamp('entry_date')->useCurrent();
+            $table->timestamps();
+        });
+
+        Schema::create('attendances', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('employee_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('designation_id')->constrained('designations')->cascadeOnDelete();
+            $table->integer('year_id');
+            $table->integer('month_id');
+            $table->date('date');
+            $table->boolean('is_present')->default(false);
+            $table->foreignId('leave_type_id')->constrained('leave_types');
+            $table->foreignId('company_id')->constrained('companies')->cascadeOnDelete();
+            $table->unsignedBigInteger('entry_user_id');
+            $table->timestamp('entry_date')->useCurrent();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
 

@@ -1,111 +1,130 @@
 @extends('layout.base')
 @section('mainContent')
     <section class="row">
-        <div class="col-12 d-flex align-items-center">
+        <div class="col-12 d-flex justify-content-between align-items-center">
             <h1 class="sectionTitle">
                 Leave
-                <small class="text-muted"> All leave applications </small>
+                <small class="text-muted">All leave applications</small>
             </h1>
-            <button type="button" class="ms-auto btn btn-sm btn-outline-primary" data-bs-toggle="modal"
-                data-bs-target="#applicationModal">
-                Application
+
+            <button type="button" class="btn btn-primary btn-sm" id="btn_save">
+                Save Leave
             </button>
         </div>
         <div class="col-12">
-            <div class="card">
+            <div class="card parent">
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="dataTable" class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Approved/Rejected By</th>
-                                    <th>Days</th>
-                                    <th>Leave Type</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Kalimullah</td>
-                                    <td>3</td>
-                                    <td>Leave</td>
-                                    <td>
-                                        <span class="status-badge status-success">Approved</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Nafisa Qamar</td>
-                                    <td>1</td>
-                                    <td>Paid Leave</td>
-                                    <td>
-                                        <span class="status-badge status-success">Approved</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Gul Raziq</td>
-                                    <td>2</td>
-                                    <td>Paid Leave</td>
-                                    <td>
-                                        <span class="status-badge status-danger">Rejected</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Gul Raziq</td>
-                                    <td>5</td>
-                                    <td>Paid Leave</td>
-                                    <td>
-                                        <span class="status-badge status-warning">Pending</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="row g-2">
+                        <div class="col-12">
+                            <label>Filters</label>
+                        </div>
+                        <div class="col-5">
+                            <select id="departmentFilter" class="form-select select2">
+                                <option value="" selected>All Departments</option>
+                                @foreach ($departments as $department)
+                                    <option value="{{ $department->id }}">{{ $department->description }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-5">
+                            <select id="designationFilter" class="form-select select2">
+                                <option value="" selected> All Designations</option>
+                                @foreach ($designations as $designation)
+                                    <option value="{{ $designation->id }}">{{ $designation->description }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-2">
+                            <button id="filterUsers" class="btn btn-primary w-100">Filter</button>
+                        </div>
+                        <div id="error_employees" class="invalid"></div>
+                        <div class="col-12 mt-3">
+                            <div class="table-responsive">
+                                @include('partials.leave-table', [
+                                    'usersWithAttendance' => $usersWithAttendance,
+                                ])
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+@endsection
 
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            // Function to fetch users based on filters
+            function fetchUsers() {
+                let departmentId = $("#departmentFilter").val();
+                let designationId = $("#designationFilter").val();
 
-    <!-- Application Modal -->
-    <div class="modal fade parent" id="applicationModal" tabindex="-1" aria-labelledby="applicationModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="applicationModalLabel">
-                        Send Absent Application
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="title" class="form-label">Title</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="title" placeholder="Medical Leave" />
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="numberOfDays" class="form-label">Number of Days</label>
-                            <input type="number" class="form-control" id="numberOfDays" placeholder="No. of days" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="absentDate" class="form-label">Date</label>
-                            <div class="input-group">
-                                <input type="date" class="form-control" id="absentDate" />
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="reason" class="form-label">Reason</label>
-                            <textarea class="form-control" id="reason" rows="3" placeholder="Reason for being absent..."></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" aria-label="Close">
-                            Cancel
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+                $.ajax({
+                    url: "{{ route('leave.filterUsers') }}",
+                    type: "GET",
+                    data: {
+                        department_id: departmentId,
+                        designation_id: designationId,
+                    },
+                    success: function(response) {
+                        updateUsersTable(response);
+                    },
+                    error: function() {
+                        dangerAlert("Error", "Failed to load users.");
+                    },
+                });
+            }
+
+            // Function to update the users table
+            function updateUsersTable(response) {
+                if (response?.success) {
+                    $("#usersTable").html(response.html);
+                }
+            }
+
+            // Function to handle form submission
+            function submitForm() {
+                $(".invalid").text(""); // Reset error messages
+
+                let formData = $("#myForm").serialize();
+
+                $.ajax({
+                    url: "{{ route('leave.store') }}",
+                    type: "POST",
+                    data: formData,
+                    success: function(response) {
+                        if (response.success) {
+                            successAlert("Success", response.message);
+                            fetchUsers(); // Reload users after successful submission
+                        }
+                    },
+                    error: function(xhr) {
+                        handleValidationErrors(xhr);
+                    },
+                });
+            }
+
+            // Function to handle validation errors
+            function handleValidationErrors(xhr) {
+                if (xhr.status === 422) {
+                    let errors = xhr.responseJSON.errors;
+                    for (let field in errors) {
+                        $(`#error_${field}`).text(errors[field][0]);
+                    }
+                } else {
+                    console.log(xhr.responseText);
+                    dangerAlert("Failed", "Failed to update leave.");
+                }
+            }
+
+            // Event bindings
+            $("#filterUsers").on("click", fetchUsers);
+            $("#myForm").on("submit", function(e) {
+                e.preventDefault();
+                submitForm();
+            });
+            $("#btn_save").on("click", (e) => confirmAlert(e, submitForm));
+        });
+    </script>
 @endsection

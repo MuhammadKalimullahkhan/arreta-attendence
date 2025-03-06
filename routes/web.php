@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LeaveController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AttendanceController;
@@ -32,8 +33,11 @@ Route::group(['prefix' => '/'], function () {
             return view('dashboard');
         });
 
+        Route::resource('/attendance', AttendanceController::class, ['only' => ['index', 'store']])->names('attendances');
         Route::get('/attendance/filter-users', [AttendanceController::class, 'filterUsers'])->name('attendances.filterUsers');
-        Route::resource('/attendance', AttendanceController::class)->names('attendances');
+
+        Route::resource('/leave', LeaveController::class, ['only' => ['index', 'store']])->names('leave');
+        Route::get('/leave/filter-users', [LeaveController::class, 'filterUsers'])->name('leave.filterUsers');
 
         Route::resource('/users', UserController::class)->names('users');
         Route::resource('/departments', DepartmentController::class)->names('departments');

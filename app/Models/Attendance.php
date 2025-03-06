@@ -15,7 +15,7 @@ class Attendance extends Model
         'year_id',
         'month_id',
         'date',
-        'status',
+        'leave_type_id',
         'is_present',
         'company_id',
         'entry_user_id',
@@ -28,7 +28,8 @@ class Attendance extends Model
         return $this->belongsTo(User::class, 'employee_id');
     }
 
-    function designation(): BelongsTo{
+    function designation(): BelongsTo
+    {
         return $this->belongsTo(Designation::class, 'designation_id');
     }
 }

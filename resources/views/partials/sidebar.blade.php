@@ -26,7 +26,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('attendances.index') }}">
+                <a href="{{ route('leave.index') }}">
                     <ion-icon name="newspaper-outline"></ion-icon>
                     leave
                 </a>
