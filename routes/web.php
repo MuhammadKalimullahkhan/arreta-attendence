@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LeaveController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,11 +30,10 @@ Route::group(['prefix' => '/'], function () {
         Route::get('logout', [LoginController::class, 'logout'])->name('account.logout');
 
         // dashboard
-        Route::get('/', function () {
-            return view('dashboard');
-        });
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::resource('/attendance', AttendanceController::class, ['only' => ['index', 'store']])->names('attendances');
+        Route::get('/attendance2', [AttendanceController::class, 'attendance2'])->name('attendances.attendance2');
         Route::get('/attendance/filter-users', [AttendanceController::class, 'filterUsers'])->name('attendances.filterUsers');
 
         Route::resource('/leave', LeaveController::class, ['only' => ['index', 'store']])->names('leave');

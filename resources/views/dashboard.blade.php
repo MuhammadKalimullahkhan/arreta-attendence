@@ -1,35 +1,43 @@
 @extends('layout.base')
-
 @section('mainContent')
     <!-- Metrics -->
     <section class="row">
         <div class="col-12">
             <h1 class="sectionTitle">Dashboard</h1>
         </div>
+
+        <!-- Total Employees -->
         <div class="col-md-4">
             <div class="card p-4">
-                <div class="text-muted">Total Employee</div>
-                <div class="display-6 fw-bold my-2">522</div>
-                <div class="small text-success">
-                    <i class="fas fa-arrow-up me-1"></i>15% Compare to last month
+                <div class="text-muted">Total Employees</div>
+                <div class="display-6 fw-bold my-2">{{ $currentMonthEmployees }}</div>
+                <div class="small {{ $employeeChange >= 0 ? 'text-success' : 'text-danger' }}">
+                    <i class="fas fa-arrow-{{ $employeeChange >= 0 ? 'up' : 'down' }} me-1"></i>
+                    {{ number_format(abs($employeeChange), 2) }}% Compare to last month
                 </div>
             </div>
         </div>
+
+        <!-- Today's Attendance -->
         <div class="col-md-4">
             <div class="card p-4">
-                <div class="text-muted">Today Attendance</div>
-                <div class="display-6 fw-bold my-2">500</div>
-                <div class="small text-success">
-                    <i class="fas fa-arrow-up me-1"></i>7% Compare to yesterday
+                <div class="text-muted">Today's Attendance</div>
+                <div class="display-6 fw-bold my-2">{{ $todayAttendance }}</div>
+                <div class="small {{ $attendanceChange >= 0 ? 'text-success' : 'text-danger' }}">
+                    <i class="fas fa-arrow-{{ $attendanceChange >= 0 ? 'up' : 'down' }} me-1"></i>
+                    {{ number_format(abs($attendanceChange), 2) }}% Compare to yesterday
                 </div>
             </div>
         </div>
+
+        <!-- Paid Leave Requests -->
         <div class="col-md-4">
             <div class="card p-4">
                 <div class="text-muted">Request Paid Leave</div>
-                <div class="display-6 fw-bold my-2">15</div>
-                <div class="small text-danger">
-                    <i class="fas fa-arrow-down me-1"></i>22% Compare to yesterday
+                <div class="display-6 fw-bold my-2">{{ $todayPaidLeave }}</div>
+                <div class="small {{ $paidLeaveChange >= 0 ? 'text-success' : 'text-danger' }}">
+                    <i class="fas fa-arrow-{{ $paidLeaveChange >= 0 ? 'up' : 'down' }} me-1"></i>
+                    {{ number_format(abs($paidLeaveChange), 2) }}% Compare to yesterday
                 </div>
             </div>
         </div>
@@ -37,9 +45,6 @@
 
     <!-- Employee Status -->
     <section class="row mt-4">
-        <!-- <div class="col-12">
-                                        <h1 class="sectionTitle">Absent Users</h1>
-                                      </div> -->
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
@@ -50,35 +55,27 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Role</th>
-                                    <th>Job Level</th>
+                                    <th>Designation</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Aditya Wibowo</td>
-                                    <td>Creative Director</td>
-                                    <td>Senior Staff</td>
-                                    <td>
-                                        <span class="status-badge status-danger">Leave</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Fahmi Pratama</td>
-                                    <td>Project Manager</td>
-                                    <td>Middle Staff</td>
-                                    <td>
-                                        <span class="status-badge status-danger">Leave</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Fakhri Boden</td>
-                                    <td>Fullstack Developer</td>
-                                    <td>Junior Staff</td>
-                                    <td>
-                                        <span class="status-badge status-warning">Paid Leave</span>
-                                    </td>
-                                </tr>
+                                @foreach ($absentUsers as $user)
+                                    <tr>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->role->description ?? 'N/A' }}</td>
+                                        <td>{{ $user->designation->description ?? 'N/A' }}</td>
+                                        <td>
+                                            <span class="status-badge status-danger">Absent</span>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                                @if ($absentUsers->isEmpty())
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted">No absent users today.</td>
+                                    </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>

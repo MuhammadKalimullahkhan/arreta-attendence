@@ -62,10 +62,10 @@
                 </a>
             </li>
             <li>
-                {{-- <a href="{{ route('reports.index') }}">
+                <a href="{{ route('attendances.attendance2') }}">
                     <ion-icon name="document-text-outline"></ion-icon>
-                    reports
-                </a> --}}
+                    attendance report
+                </a>
             </li>
         </ul>
     </div>
