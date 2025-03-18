@@ -28,7 +28,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 21
           local-dir: ./  # Uploads everything from project root
-          server-dir: /public_html/arreta.wazar.pk/  # Change to your target directory
+          server-dir: ./  # Change to your target directory
           exclude: |
             .git*
             node_modules/
