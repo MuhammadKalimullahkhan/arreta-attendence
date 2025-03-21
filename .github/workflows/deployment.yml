@@ -1,0 +1,39 @@
+name: Deploy Laravel to cPanel
+
+on:
+  push:
+    branches:
+      - main  # Deploy only when pushing to main branch
+
+jobs:
+  FTP-Deploy-Action:
+    name: FTP Deploy Laravel Project
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Install Dependencies
+        run: |
+          composer install --no-dev --optimize-autoloader
+
+      - name: Deploy to cPanel
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          local-dir: ./  # Uploads everything from project root
+          server-dir: ./  # Change to your target directory
+          exclude: |
+            .git*
+            node_modules/
+            vendor/
+            storage/
+            tests/
+            .env
+            .github/

@@ -244,8 +244,15 @@ class UserController extends Controller
 //        $user->is_active = 0;
 //        $user->save();
 
+
         User::findOrFail($id)->delete();
 
         return response('', 200);
+    }
+
+    public function profile()
+    {
+        $currentUser = auth()->user();
+        return view('profile', compact('currentUser'));
     }
 }

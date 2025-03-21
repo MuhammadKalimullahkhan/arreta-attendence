@@ -48,6 +48,7 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/leave/filter-users', [LeaveController::class, 'filterUsers'])->name('leave.filterUsers');
 
         Route::resource('/users', UserController::class)->names('users');
+        Route::get('/profile', [UserController::class, 'profile'])->name('users');
         Route::resource('/departments', DepartmentController::class)->names('departments');
         Route::resource('/designation', DesignationController::class)->names('designations');
         Route::resource('/roles', RoleController::class)->names('roles');

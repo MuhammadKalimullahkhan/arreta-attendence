@@ -20,7 +20,6 @@
                                 <tr>
                                     <th>S.no</th>
                                     <th>Name</th>
-                                    <th>Added By</th>
                                     <th>Added At</th>
                                     <th>Updated At</th>
                                     <th></th>
@@ -31,9 +30,8 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $desig->description }}</td>
-                                        <td>User Id {{ $desig->entry_user_id }}</td>
                                         <td>{{ $desig->created_at }}</td>
-                                        <td>{{ $desig->update_at }}</td>
+                                        <td>{{ $desig->updated_at }}</td>
                                         <td>
                                             <x-action-dropdown itemId="{{ $desig->id }}"
                                                 route="{{ route('designations.destroy', $desig->id) }}" />

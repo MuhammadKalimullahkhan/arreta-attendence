@@ -22,7 +22,6 @@
                                 <tr>
                                     <th>S.no</th>
                                     <th>Name</th>
-                                    <th>Added By</th>
                                     <th>Added At</th>
                                     <th>Updated At</th>
                                     <th></th>
@@ -33,7 +32,6 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $role->description }}</td>
-                                        <td>Auther {{ $role->id }}</td>
                                         <td>{{ $role->created_at }}</td>
                                         <td>{{ $role->updated_at }}</td>
                                         <td>
@@ -127,7 +125,7 @@
                     if (response.success) {
                         $('#upsertModal').modal('hide');
                         successAlert("Updated",
-                        "Role updated successfully."); // Reload page to update data
+                            "Role updated successfully."); // Reload page to update data
                     }
                 },
                 error: function(xhr) {
