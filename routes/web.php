@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LeaveController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,13 @@ Route::group(['prefix' => '/'], function () {
             Route::get('login', [LoginController::class, 'index'])->name('account.login');
             Route::post('authenticate', [LoginController::class, 'login'])->name('account.authenticate');
         });
+
+    });
+
+    // shared Routes
+    Route::prefix('/employee')->group(function () {
+        Route::get('/', [EmployeeController::class, 'index'])->name('employee.index');
+        Route::get('/dashboard',[EmployeeController::class,"dashboard"])->name("employee.dashboard");
     });
 
     // Authenticated Routes

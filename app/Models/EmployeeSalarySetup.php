@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class EmployeeSalarySetup extends Model
 {
@@ -19,4 +20,19 @@ class EmployeeSalarySetup extends Model
         'entry_date',
         'is_active',
     ];
+
+    public function employee(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'employee_id');
+    }
+
+    public function payHead(): BelongsTo
+    {
+        return $this->belongsTo(RefPayHead::class, 'pay_head_id');
+    }
+
+    public function payHeadType(): BelongsTo
+    {
+        return $this->belongsTo(RefPayHeadType::class, 'pay_head_type_id');
+    }
 }

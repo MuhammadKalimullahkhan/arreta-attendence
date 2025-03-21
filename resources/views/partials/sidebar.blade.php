@@ -67,6 +67,12 @@
                     attendance report
                 </a>
             </li>
+            <li>
+                <a href="{{ route('employee.index') }}">
+                    <ion-icon name="document-text-outline"></ion-icon>
+                    employee info
+                </a>
+            </li>
         </ul>
     </div>
 
