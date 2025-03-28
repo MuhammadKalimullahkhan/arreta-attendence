@@ -29,7 +29,7 @@ Route::group(['prefix' => '/'], function () {
     // shared Routes
     Route::prefix('/employee')->group(function () {
         Route::get('/', [EmployeeController::class, 'index'])->name('employee.index');
-        Route::get('/dashboard',[EmployeeController::class,"dashboard"])->name("employee.dashboard");
+        Route::get('/dashboard', [EmployeeController::class, "dashboard"])->name("employee.dashboard");
     });
 
     // Authenticated Routes
@@ -41,14 +41,14 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::resource('/attendance', AttendanceController::class, ['only' => ['index', 'store']])->names('attendances');
-        Route::get('/attendance2', [AttendanceController::class, 'attendance2'])->name('attendances.attendance2');
         Route::get('/attendance/filter-users', [AttendanceController::class, 'filterUsers'])->name('attendances.filterUsers');
 
         Route::resource('/leave', LeaveController::class, ['only' => ['index', 'store']])->names('leave');
         Route::get('/leave/filter-users', [LeaveController::class, 'filterUsers'])->name('leave.filterUsers');
 
         Route::resource('/users', UserController::class)->names('users');
-        Route::get('/profile', [UserController::class, 'profile'])->name('users');
+        Route::get('/users/{id}/attendance', [UserController::class, 'attendance'])->name('users.attendance');
+        Route::get('/profile', [UserController::class, 'profile'])->name('users.profile');
         Route::resource('/departments', DepartmentController::class)->names('departments');
         Route::resource('/designation', DesignationController::class)->names('designations');
         Route::resource('/roles', RoleController::class)->names('roles');

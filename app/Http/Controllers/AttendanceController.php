@@ -11,23 +11,6 @@ use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
-    public function attendance2()
-    {
-        $USER_ID = 1;
-        $currentMonth = Carbon::now()->month;
-        $currentYear = Carbon::now()->year;
-
-        $attendances = Attendance::where('employee_id', $USER_ID)
-            ->whereMonth('date', $currentMonth)
-            ->whereYear('date', $currentYear)
-            ->get();
-
-        $totalWorkingDays = $attendances->count();
-        $presentDays = $attendances->where('is_present', true)->count();
-        $absentDays = $totalWorkingDays - $presentDays;
-
-        return view('attendance2', compact('attendances', 'totalWorkingDays', 'presentDays', 'absentDays'));
-    }
     public function index()
     {
         $currentDate = Carbon::today();

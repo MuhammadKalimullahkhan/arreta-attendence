@@ -6,6 +6,7 @@
     --foreground: black;
     /* --color-secondary: #f6f6f6; */
     --color-primary: #0d6efd;
+    --color-primary-hover: #e4efff;
     --color-secondary: white;
     --color-border: #eee;
 
@@ -33,6 +34,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    font-size: .9rem;
     padding-top: 0;
     padding-left: 0;
     background-color: var(--background);
@@ -96,8 +98,7 @@ aside footer ul {
     list-style: none;
     padding: 0;
     margin: 0;
-
-    padding: 8px;
+    margin-top: 8px;
 }
 
 aside .content ul li,
@@ -110,7 +111,8 @@ aside .content ul li a,
 aside footer ul li a {
     gap: 8px;
     width: 100%;
-    padding: 10px .5rem;
+    padding: 6px .9rem;
+    margin: 2px 5px;
     border-radius: var(--border-radius);
     display: flex;
     color: #494949;
@@ -119,10 +121,28 @@ aside footer ul li a {
     transition: background-color 200ms;
 }
 
+aside .content ul li a.active,
+aside footer ul li a.active,
 aside .content ul li a:hover,
 aside footer ul li a:hover {
-    color: white;
+    color: var(--color-primary);
+    background-color: var(--color-primary-hover);
+}
+
+aside .content ul li a.active {
+    position: relative;
+}
+
+aside .content ul li a.active::after {
+    content: '';
+    position: absolute;
+    width: 5px;
+    height: 100%;
     background-color: var(--color-primary);
+    left: 0;
+    top: 0;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 
 .btn,

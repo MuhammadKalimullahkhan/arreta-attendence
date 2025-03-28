@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attendance;
 use App\Models\Department;
 use App\Models\Designation;
 use App\Models\EmployeeSalarySetup;
@@ -13,6 +14,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -254,5 +256,22 @@ class UserController extends Controller
     {
         $currentUser = auth()->user();
         return view('profile', compact('currentUser'));
+    }
+
+    public function attendance($userId)
+    {
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+
+        $attendances = Attendance::where('employee_id', $userId)
+            ->whereMonth('date', $currentMonth)
+            ->whereYear('date', $currentYear)
+            ->get();
+
+        $totalWorkingDays = $attendances->count();
+        $presentDays = $attendances->where('is_present', true)->count();
+        $absentDays = $totalWorkingDays - $presentDays;
+
+        return view('attendance2', compact('attendances', 'totalWorkingDays', 'presentDays', 'absentDays'));
     }
 }

@@ -3,7 +3,7 @@
     <section class="row">
         <div class="col-12 d-flex justify-content-between align-items-center">
             <h1 class="sectionTitle">
-                Addentance
+                Attendance
                 <small class="text-muted">List of all Employees Attendance</small>
             </h1>
 
