@@ -67,8 +67,17 @@
                     attendance report
                 </a>
             </li>
+            <li>
+                <a href="{{ route('payroll.index') }}">
+                   <ion-icon name="people-outline"></ion-icon>
+                  unknown
+                </a>
+             </li>
         </ul>
+
     </div>
+
+
 
     <footer>
         <ul>
