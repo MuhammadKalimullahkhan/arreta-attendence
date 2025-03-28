@@ -57,7 +57,7 @@ return new class extends Migration {
             $table->foreignId('company_id')->constrained('companies')->cascadeOnDelete();
             $table->unsignedBigInteger('entry_user_id')->constrained('users')->cascadeOnDelete();
             $table->timestamp('entry_date')->useCurrent();
-            $table->timestamp('deleted_at');
+            $table->timestamp('deleted_at')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
             $table->rememberToken();

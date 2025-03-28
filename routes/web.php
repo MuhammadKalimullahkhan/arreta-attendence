@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\PayrollController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AttendanceController;
@@ -33,7 +34,7 @@ Route::group(['prefix' => '/'], function () {
     });
 
     // Authenticated Routes
-    Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::middleware(['auth'])->group(function () {
         // Authentication Logout
         Route::get('logout', [LoginController::class, 'logout'])->name('account.logout');
 
@@ -53,5 +54,6 @@ Route::group(['prefix' => '/'], function () {
         Route::resource('/designation', DesignationController::class)->names('designations');
         Route::resource('/roles', RoleController::class)->names('roles');
         Route::resource('/pay-heads', PayHeadController::class)->names('pay-heads');
+        Route::resource('/pay-role', PayrollController::class)->names('payroll');
     });
 });

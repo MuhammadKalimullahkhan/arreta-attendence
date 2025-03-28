@@ -37,6 +37,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'is_active' => 'boolean',
+            'entry_date' => 'datetime',
         ];
     }
 
@@ -51,6 +52,10 @@ class User extends Authenticatable
     public function department(): BelongsTo
     {
         return $this->belongsTo(Department::class, 'department_id');
+    }
+    public function salarySetups()
+    {
+        return $this->hasMany(EmployeeSalarySetup::class, 'employee_id');
     }
 
     // Has Releationships

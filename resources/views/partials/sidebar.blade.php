@@ -19,6 +19,8 @@
         </ul>
     </div>
 
+
+
     <footer>
         <ul>
             <x-sidebar-link route="users.profile" icon="person-circle-outline" text="Profile" />
