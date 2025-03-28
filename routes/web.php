@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\PayrollController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,13 @@ Route::group(['prefix' => '/'], function () {
             Route::get('login', [LoginController::class, 'index'])->name('account.login');
             Route::post('authenticate', [LoginController::class, 'login'])->name('account.authenticate');
         });
+
+    });
+
+    // shared Routes
+    Route::prefix('/employee')->group(function () {
+        Route::get('/', [EmployeeController::class, 'index'])->name('employee.index');
+        Route::get('/dashboard',[EmployeeController::class,"dashboard"])->name("employee.dashboard");
     });
 
     // Authenticated Routes
@@ -41,6 +49,7 @@ Route::group(['prefix' => '/'], function () {
         Route::get('/leave/filter-users', [LeaveController::class, 'filterUsers'])->name('leave.filterUsers');
 
         Route::resource('/users', UserController::class)->names('users');
+        Route::get('/profile', [UserController::class, 'profile'])->name('users');
         Route::resource('/departments', DepartmentController::class)->names('departments');
         Route::resource('/designation', DesignationController::class)->names('designations');
         Route::resource('/roles', RoleController::class)->names('roles');

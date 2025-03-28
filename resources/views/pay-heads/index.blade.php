@@ -19,7 +19,6 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Added By</th>
                                     <th>Added At</th>
                                     <th>Updated At</th>
                                     <th>Action</th>
@@ -29,7 +28,6 @@
                                 @foreach ($payHeads as $payHead)
                                     <tr>
                                         <td>{{ $payHead->description }}</td>
-                                        <td>{{ 'Kalimullah' }} <small>soon</small></td>
                                         <td>{{ \Carbon\Carbon::parseDate($payHead->created_at) }}</td>
                                         <td>{{ \Carbon\Carbon::parseDate($payHead->updated_at) }}</td>
                                         <td>
