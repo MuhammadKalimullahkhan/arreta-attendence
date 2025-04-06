@@ -236,21 +236,23 @@ class UserController extends Controller
 
     public function destroy(string $id)
     {
-        //        $user = User::where("is_active", true)->find($id);
-//
-//        if (!$user) return response()->json([
-//            'success' => false,
-//            'message' => 'User not found.'
-//        ], 404);
-//
-//        $user->is_active = 0;
-//        $user->save();
+        $user = User::where('id', $id)
+            ->where('role_id', '!=', 1)
+            ->where('id', '!=', auth()->user()->id)
+            ->first();
 
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found or cannot be deleted'
+            ], 404);
+        }
 
-        User::findOrFail($id)->delete();
+        $user->delete();
 
         return response('', 200);
     }
+
 
     public function profile()
     {
