@@ -7,145 +7,116 @@
                 Pay role
                 <small class="text-muted">List of all Pay role</small>
             </h1>
-
-            {{-- <button class="btn btn-primary btn-sm" onclick="openModal(null)">
-                Add Department
-            </button> --}}
+            <div class="d-print-none">
+                <button id="btn_print" class="btn btn-primary" onclick="window.print()" title="Print Current Salary Setup">
+                    <i class="fa-solid fa-print"></i> Print
+                </button>
+            </div>
         </div>
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="dataTable" class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th colspan="5" style="border: 1px solid var(--bs-gray-700);"></th>
-                                    <th colspan="4"
-                                        style="border: 1px solid var(--bs-gray-700); border-left: none; background-color: #aeeeee;">
-                                        Fixed Earnings</th>
-                                    <th colspan="3"
-                                        style="border: 1px solid var(--bs-gray-700); border-left: none; background-color: #fedab8;">
-                                        Variable Earning & Benefits</th>
-                                </tr>
-                                <tr>
-                                    <th>Is Hold</th>
-                                    <th>Employee</th>
-                                    <th>Designation</th>
-                                    <th>Joining Date</th>
-                                    <th>Status</th>
-                                    <th>01-Basic Salary</th>
-                                    <th>02-Medical</th>
-                                    <th>03-House rent</th>
-                                    <th>Total Gross salary</th>
-                                    <th>05-monthly commision</th>
-                                    <th>Total variable earning</th>
-                                    <th>Total gross</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($payrolls as $payroll)
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" name="isHold[]" @checked($payroll['is_hold']) class="form-check-input" />
-                                        </td>
-                                        <td>{{ $payroll['employee'] }}</td>
-                                        <td>{{ $payroll['designation'] }}</td>
-                                        <td>{{ $payroll['joining_date'] }}</td>
-                                        <td>{{ $payroll['status'] }}</td>
-                                        <td>{{ number_format($payroll['basic_salary'], 2) }}</td>
-                                        <td>{{ number_format($payroll['medical'], 2) }}</td>
-                                        <td>{{ number_format($payroll['house_rent'], 2) }}</td>
-                                        <td>{{ number_format($payroll['total_gross_salary'], 2) }}</td>
-                                        <td>{{ number_format($payroll['monthly_commission'], 2) }}</td>
-                                        <td>{{ number_format($payroll['total_variable_earning'], 2) }}</td>
-                                        <td>{{ number_format($payroll['total_gross'], 2) }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <div class="col-12">
+                <div class="card parent">
+                    <div class="card-body">
+                        <div class="row g-2">
+                            <div class="d-print-none col-12">
+                                <label>Filters</label>
+                            </div>
+                            <div class="col-3">
+                                <label for="userFilter">Users</label>
+                                <select id="userFilter" class="form-select select2">
+                                    <option value="0" selected> All Users</option>
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-3">
+                                <label for="departmentFilter">Departments</label>
+                                <select id="departmentFilter" class="form-select select2">
+                                    <option value="0" selected>All Departments</option>
+                                    @foreach ($departments as $department)
+                                        <option value="{{ $department->id }}">{{ $department->description }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="yearFilter">Year</label>
+                                <select id="yearFilter" class="form-select select2">
+                                    <option value="0" disabled>-- Select Year --</option>
+                                    <option value="2025">2025</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2021">2021</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="monthFilter">Month</label>
+                                <select id="monthFilter" class="form-select select2">
+                                    <option value="0" disabled>-- Select Month --</option>
+                                    <option value="01">Jan</option>
+                                    <option value="02">Feb</option>
+                                    <option value="03">Mar</option>
+                                    <option value="04" selected>Apr</option>
+                                    <option value="05">May</option>
+                                    <option value="06">Jun</option>
+                                    <option value="07">Jul</option>
+                                    <option value="08">Aug</option>
+                                    <option value="09">Sep</option>
+                                    <option value="10">Oct</option>
+                                    <option value="11">Nov</option>
+                                    <option value="12">Dec</option>
+                                </select>
+                            </div>
+                            {{-- <div class="d-print-none col d-flex flex-col">
+                                <button id="btn_filter" type="submit" class="mt-auto btn btn-primary w-100"
+                                    onclick="loadTableData()">Process</button>
+                            </div> --}}
+                            <div class="col-12 mt-3">
+                                <div class="table-responsive">
+                                    <table id="tbl_payroll" class="table table-hover">
+                                        <thead></thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
-    <!-- Modals -->
-    <!-- Department Modal -->
-    <div class="modal fade parent" id="upsertModal" tabindex="-1" aria-labelledby="departmentModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="departmentModalLabel">Add Department</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="POST" action="{{ route('departments.create') }}">
-                        @csrf
-                        <input type="hidden" name="id" id="currentId">
-                        <!-- This field is updated dynamically -->
-
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Department Name <span
-                                    class="text-danger">*</span></label>
-                            <input type="text" id="description" name="description" placeholder="Finance"
-                                class="form-control">
-                            <div id="error_description" class="invalid"></div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Save Department</button>
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                    </form>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- End Add Department Modal -->
 @endsection
 
 @section('scripts')
     <script src="/js/utils.js"></script>
     <script>
-        function openModal(id = null) {
-            $("#error_description").text(null)
-            if (id) {
-                // Edit mode
-                $('.modal .modal-title').text('Edit Designation');
-                $('.modal form button[type="submit"]').text('Update');
+        let payrollData = {};
+        let earningsColumns;
+        let deductionsColumns;
+        let basicPay = 0;
 
-                $.get('{{ route('departments.index') }}' + '/' + id, function(response) {
-                    if (response.success) {
-                        const payHead = formatObject(response.data[0]);
-                        populateValues(payHead) // set values to form
-                    }
-                });
-            } else {
-                // Create mode
-                $('.modal .modal-title').text('Add Designation');
-                $('.modal form button[type="submit"]').text('Create');
 
-                $('#currentId').val(null);
-                $('#upsertModal form')[0].reset();
-            }
-            $('#upsertModal').modal('show');
-        }
+        function loadTableData() {
+            payrollData = {};
+            earningsColumns = [];
+            deductionsColumns = [];
+            basicPay = 0;
 
-        $('#upsertModal form').submit(function(event) {
-            event.preventDefault();
-
-            let id = $('#currentId').val();
-            let url = id ? '{{ route('departments.index') }}/' + id : '{{ route('departments.store') }}';
-            let method = id ? 'PUT' : 'POST';
+            let url = '{{ route('payroll.store') }}';
 
             $.ajax({
                 url: url,
-                type: method,
-                data: $(this).serialize(),
+                type: 'POST',
+                data: {
+                    department_id: $("#departmentFilter").val(),
+                    user_id: $("#userFilter").val(),
+                    year: $("#yearFilter").val(),
+                    month: $("#monthFilter").val(),
+                },
                 success: function(response) {
-                    if (response.success) {
-                        $('#upsertModal').modal('hide');
-                        successAlert("Success", response.message); // Reload page to update data
+                    console.log(response);
+                    if (response.success && response.data.length > 0) {
+                        generatePayrollTable(response.data[0]); // payrolls passed here
                     }
                 },
                 error: function(xhr) {
@@ -156,10 +127,200 @@
                         }
                     } else {
                         console.log(xhr.responseText);
-                        dangerAlert("Failed", "Failed to update the role.")
+                        dangerAlert("Failed", "Failed to update the role.");
                     }
                 }
             });
+        }
+
+        function generatePayrollTable(data) {
+            let earningsHeaders = new Map();
+            let deductionsHeaders = new Map();
+
+            // Process data
+            data.forEach(item => {
+                if (!payrollData[item.EmpID]) {
+                    payrollData[item.EmpID] = {
+                        empID: item.EmpID,
+                        name: item.name,
+                        department: item.department,
+                        designation: item.designation,
+                        earnings: {},
+                        deductions: {},
+                        leaveCount: item.l_counts,
+                    };
+                }
+
+                if (item.pay_head_type.toLowerCase() === "earnings") {
+                    payrollData[item.EmpID].earnings[item.pay_head] = {
+                        amount: parseFloat(item.amount),
+                        isEditable: item.is_editable,
+                        headId: item.pay_head_id
+                    };
+                    earningsHeaders.set(item.pay_head_id, {
+                        payHead: item.pay_head,
+                        id: item.pay_head_id
+                    });
+                } else if (item.pay_head_type.toLowerCase() === "deductions") {
+                    payrollData[item.EmpID].deductions[item.pay_head] = {
+                        amount: parseFloat(item.amount),
+                        isEditable: item.is_editable,
+                        headId: item.pay_head_id
+                    };
+                    deductionsHeaders.set(item.pay_head_id, {
+                        payHead: item.pay_head,
+                        id: item.pay_head_id
+                    });
+                }
+            });
+
+            // Convert headers to arrays for ordered iteration
+            earningsColumns = Array.from(earningsHeaders.values());
+            deductionsColumns = Array.from(deductionsHeaders.values());
+
+            // Build table headers dynamically
+            let tableHead = $("#tbl_payroll thead");
+            tableHead.empty();
+
+            let headerRow1 =
+                `<tr>
+                    <th colspan="2" style="border: 1px solid var(--color-border);">Personal Information</th>
+                    <th colspan="${earningsColumns.length}" style="border: 1px solid var(--color-border); background-color: #e4f0fa;">Earnings</th>
+                    <th colspan="${deductionsColumns.length+1}" style="border: 1px solid var(--color-border); background-color: #fae4e4;">Deductions</th>
+                    <th style="border: 1px solid var(--color-border);">Gross Salary</th>
+                </tr>`;
+
+            let headerRow2 =
+                `<tr>
+                    <th>Employee Name</th>
+                    <th>Department</th>
+                    ${earningsColumns.map(col => `<th>${col.payHead}</th>`).join("")}
+                    ${deductionsColumns.map(col => `<th>${col.payHead}</th>`).join("")}
+                    <th>Leaves</th>
+                    <th>Gross Salary</th>
+                </tr>`;
+
+            // Creating table headers
+            tableHead.append(headerRow1);
+            tableHead.append(headerRow2);
+
+            // Build table body dynamically
+            let tableBody = $("#tbl_payroll tbody");
+            tableBody.empty();
+
+            Object.values(payrollData).forEach(emp => {
+                let earningsTotal = 0;
+                let deductionsTotal = 0;
+
+                let row = `<tr><td>${emp.name}<small class='d-block text-muted'>${emp.designation}</small></td>`;
+                row += `<td>${emp.department}</td>`;
+
+                // Populate earnings columns
+                earningsColumns.forEach(col => {
+                    let val = emp.earnings[col.payHead];
+
+                    col.payHead == 'Basic Pay' ? basicPay = val?.amount : '';
+
+                    let inputId = `E${col.id}_${emp.empID}`;
+                    if (val?.isEditable == 1) {
+                        row +=
+                            `<td><input type="number" id="${inputId}" value="${val?.amount.toFixed() || '0.00'}" class="form-control earnings-input"/></td>`;
+                    } else {
+                        row += `<td><span id="${inputId}">${val?.amount.toFixed() || '0.00'}</span></td>`;
+                    }
+                    earningsTotal += val?.amount || 0;
+                });
+
+                // Populate deductions columns
+                deductionsColumns.forEach(col => {
+                    let val = emp.deductions[col.payHead];
+                    let inputId = `D${col.id}_${emp.empID}`;
+                    if (val?.isEditable == 1) {
+                        row +=
+                            `<td><input type="number" id="${inputId}" value="${val?.amount.toFixed() || '0.00'}" class="form-control deductions-input"/></td>`;
+                    } else {
+                        row += `<td><span id="${inputId}">${val?.amount.toFixed() || '0.00'}</span></td>`;
+                    }
+                    deductionsTotal += val?.amount || 0;
+                });
+
+                let leavesDeduction = (basicPay / 30) * emp.leaveCount;
+                let grossSalary = earningsTotal - (deductionsTotal + leavesDeduction);
+
+                row += `<td id="L_${emp.empID}" title="Total Leaves : ${emp.leaveCount} Days">
+                    ${leavesDeduction.toFixed()} <small class='text-muted'>| ${emp.leaveCount}</small>
+                </td>`;
+
+                row += `<td id="G_${emp.empID}">
+                    ${grossSalary.toFixed()}
+                </td>
+            </tr>`;
+
+                tableBody.append(row);
+            });
+
+            // Attach event listeners for recalculating gross salary
+            $(".earnings-input, .deductions-input").on("input", function() {
+                let empID = $(this).attr("id").split("_")[1]; // Extract EmpID from ID
+                reTotalGross(empID);
+            });
+        }
+
+        // Function to recalculate gross salary when an input changes
+        function reTotalGross(empID) {
+            let earningsTotal = 0;
+            let deductionsTotal = 0;
+            let emp = payrollData[empID];
+            let basicPay = 0;
+
+
+            // Recalculate earnings
+            earningsColumns.forEach(col => {
+                let inputId = `E${col.id}_${empID}`;
+                let val = emp.earnings[col.payHead];
+                let value;
+                if (val?.isEditable == 1) {
+                    value = parseFloat($(`#${inputId}`).val()) || 0;
+
+                } else {
+                    value = parseFloat($(`#${inputId}`).text()) || 0;
+                }
+                col.payHead == 'Basic Pay' ? basicPay = value : '';
+                emp.earnings[col.payHead].amount = value; // Update the amount in payrollData
+                earningsTotal += value;
+            });
+            deductionsColumns.forEach(col => {
+                let inputId = `D${col.id}_${empID}`;
+                let value;
+                let val = emp.deductions[col.payHead];
+                if (val?.isEditable == 1) {
+                    value = parseFloat($(`#${inputId}`).val()) || 0;
+                } else {
+                    value = parseFloat($(`#${inputId}`).text()) || 0;
+                }
+                emp.deductions[col.payHead].amount = value; // Update the amount in payrollData
+                deductionsTotal += value;
+            });
+
+            // Calculate deductions for leaves
+            let leavesDeduction = (basicPay / 30) * emp.leaveCount;
+            let grossSalary = earningsTotal - (deductionsTotal + leavesDeduction);
+
+            $(`#L_${empID}`).text(leavesDeduction.toFixed());
+            $(`#G_${empID}`).text(grossSalary.toFixed());
+
+            console.log(emp)
+        }
+
+
+        // Call function to load data when the page is ready
+        $(document).ready(function() {
+            loadTableData();
+
+            $('.select2').on('select2:select select2:unselect', function(e) {
+                loadTableData();
+            });
+
         });
     </script>
 @endsection

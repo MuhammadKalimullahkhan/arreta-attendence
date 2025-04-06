@@ -7,7 +7,8 @@
                 <small class="text-muted">List of all Employees</small>
             </h1>
 
-            <button type="button" class="btn btn-primary btn-sm" onclick="openModal(null)">
+            <button type="button" class="btn btn-primary" onclick="openModal(null)" title="Add New Employee">
+                <i class="fa-solid fa-plus"></i>
                 Add Employee
             </button>
         </div>

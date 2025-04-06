@@ -20,4 +20,9 @@ class EmployeeSalarySetup extends Model
         'entry_date',
         'is_active',
     ];
+
+    public function payHead()
+    {
+        return $this->belongsTo(RefPayHead::class, 'pay_head_id');
+    }
 }

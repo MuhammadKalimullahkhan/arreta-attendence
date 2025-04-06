@@ -1,25 +1,30 @@
+/* This file is part of the Laravel framework.
+ * (c) Laravel <https://wazar.pk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
-    /* colors */
     --background: #f6f6f6;
     --foreground: black;
-    /* --color-secondary: #f6f6f6; */
-    --color-primary: #0d6efd;
+    --white: 255, 255, 255;
+    --color-primary: 20, 87, 230;
+    --color-success: 23, 202, 104;
+    --color-danger: 236, 95, 103;
+    --color-warning: 245, 177, 75;
     --color-primary-hover: #e4efff;
     --color-secondary: white;
     --color-border: #eee;
 
-    /* override colors */
-    --bs-blue: var(--color-primary);
-    --bs-primary: var(--color-primary);
+    --bs-blue: rgb(var(--color-primary));
+    --bs-primary: rgb(var(--color-primary));
 
-    /* sizing */
     --body-padding: 32px;
     --table-cell-padding: 1rem;
     --border-radius: 8px;
-
-    /* sidebar */
     --sidebar-width: 250px;
 }
 
@@ -27,7 +32,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: "Poppins", serif;
+    font-family: "Poppins", sans-serif;
 }
 
 body {
@@ -38,6 +43,16 @@ body {
     padding-top: 0;
     padding-left: 0;
     background-color: var(--background);
+    background: radial-gradient(at bottom right, #1A8FE5 0, #1A8FE5 250px, #1A8FE533 250px, #1A8FE533 500px, #1A8FE5BF 500px, #1A8FE5BF 750px, #1A8FE540 750px, #1A8FE540 1000px, #1A8FE54D 1000px, #1A8FE54D 1250px, #1A8FE5BF 1250px, #1A8FE5BF 1500px, #1A8FE533 1500px, #1A8FE533 1750px, transparent 1750px, transparent 2000px), radial-gradient(at top left, transparent 0, transparent 250px, #1A8FE533 250px, #1A8FE533 500px, #1A8FE5BF 500px, #1A8FE5BF 750px, #1A8FE54D 750px, #1A8FE54D 1000px, #1A8FE540 1000px, #1A8FE540 1250px, #1A8FE5BF 1250px, #1A8FE5BF 1500px, #1A8FE533 1500px, #1A8FE533 1750px, #1A8FE5 1750px, #1A8FE5 2000px, transparent 2000px, transparent 5000px);
+    background-blend-mode: multiply;
+    background-size: 2000px 2000px, 2000px 2000px;
+    background-color: #E4E4ED;
+}
+
+#content {
+    min-height: 100vh;
+    background-color: rgba(255, 255, 255, 0.85);
+    /* backdrop-filter: blur(4px); */
 }
 
 nav {
@@ -49,7 +64,7 @@ nav {
     display: flex;
     align-items: center;
     background-color: #fff;
-    box-shadow: 2px 2px 4px rgb(0, 0, 0, 0.026);
+    box-shadow: 2px 2px 4px rgb(0 0 0 / 3%);
 }
 
 nav #burger-icon {
@@ -68,7 +83,6 @@ body>footer,
     margin-left: var(--sidebar-width);
 }
 
-/* Sidebar */
 aside {
     position: fixed;
     display: flex;
@@ -77,7 +91,7 @@ aside {
     width: var(--sidebar-width);
     height: 100%;
     background-color: var(--color-secondary);
-    box-shadow: 2px 2px 4px rgb(0, 0, 0, 0.026);
+    box-shadow: 2px 2px 4px rgb(0 0 0 / 3%);
 }
 
 aside header {
@@ -111,21 +125,22 @@ aside .content ul li a,
 aside footer ul li a {
     gap: 8px;
     width: 100%;
-    padding: 6px .9rem;
+    padding: 6px 0.9rem;
     margin: 2px 5px;
     border-radius: var(--border-radius);
     display: flex;
     color: #494949;
     text-transform: capitalize;
     text-decoration: none;
-    transition: background-color 200ms;
+    transition: background-color 200ms, translate 200ms;
 }
 
 aside .content ul li a.active,
 aside footer ul li a.active,
 aside .content ul li a:hover,
 aside footer ul li a:hover {
-    color: var(--color-primary);
+    translate: 0 -2px;
+    color: rgb(var(--color-primary));
     background-color: var(--color-primary-hover);
 }
 
@@ -138,7 +153,7 @@ aside .content ul li a.active::after {
     position: absolute;
     width: 5px;
     height: 100%;
-    background-color: var(--color-primary);
+    background-color: rgb(var(--color-primary));
     left: 0;
     top: 0;
     border-top-right-radius: 8px;
@@ -150,9 +165,9 @@ aside footer ul li a:hover {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-aside .content ul li a ion-icon,
-aside footer ul li a ion-icon {
-    font-size: 22px;
+aside .content ul li a i,
+aside footer ul li a i {
+    font-size: 16px;
 }
 
 footer {
@@ -170,10 +185,6 @@ body>footer p {
     margin: 0;
 }
 
-/* End Sidebar */
-
-
-/* utils */
 .invalid {
     color: #f31212;
     font-size: 14px;
@@ -192,8 +203,91 @@ body>footer p {
 }
 
 .card {
+    position: relative;
     border-radius: 1rem;
-    border-color: var(--color-border);
+    border-color: transparent;
+}
+
+.tiles .tile {
+    position: relative;
+    color: white;
+    padding: 12px 20px !important;
+    overflow: hidden;
+    backdrop-filter: blur(4px);
+    transition: all 200ms;
+}
+
+.tiles .tile.tile-primary {
+    background: linear-gradient(to right,
+            rgba(var(--color-primary), 1),
+            rgba(var(--color-primary), .9));
+}
+
+.tiles .tile.tile-success {
+    background: linear-gradient(to right,
+            rgb(var(--color-success)),
+            rgba(var(--color-success), .9));
+}
+
+.tiles .tile.tile-warning {
+    background: linear-gradient(to right,
+            rgb(var(--color-warning)),
+            rgba(var(--color-warning), .9));
+}
+
+.tiles .tile.tile-danger {
+    background: linear-gradient(to right,
+            rgba(var(--color-danger), 1),
+            rgba(var(--color-danger), .9));
+}
+
+.tile .head {
+    font-size: 2.9rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.tile .title {
+    translate: 0 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.tile .info-text {
+    font-size: 0.9rem;
+    translate: 0 100px;
+    transition: all 0.3s ease;
+}
+
+.tile .card-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 20px;
+    line-height: 1;
+    color: rgb(var(--white));
+    height: 45px;
+    width: 45px;
+    background-color: rgba(var(--white), 0.2);
+    border-radius: 50%;
+    padding: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    outline: 5px solid rgb(255 255 255 / 28%);
+    outline-offset: 3px;
+}
+
+.tile:hover {
+    cursor: pointer;
+    transform: translateY(-5px);
+    box-shadow: -4px 0px 20px rgba(0, 0, 0, 0.05);
+}
+
+.tile:hover .title,
+.tile:hover .info-text {
+    translate: 0px 0px;
 }
 
 .table thead tr {
@@ -203,6 +297,7 @@ body>footer p {
 .table thead tr th {
     font-weight: 500;
     color: var(--bs-gray-700);
+    white-space: nowrap;
 }
 
 .table tr td,
@@ -215,21 +310,10 @@ body>footer p {
     border-bottom: none !important;
 }
 
-/* datatable */
 .dataTables_filter {
     margin-bottom: 1rem;
     float: unset !important;
 }
-
-/* .table thead tr th:first-child {
-    border-top-left-radius: var(--border-radius);
-    border-bottom-left-radius: var(--border-radius);
-}
-
-.table thead tr th:last-child {
-    border-top-right-radius: var(--border-radius);
-    border-bottom-right-radius: var(--border-radius);
-} */
 
 .status-badge {
     padding: 0.25rem 0.75rem;
@@ -252,7 +336,6 @@ body>footer p {
     color: #f31212;
 }
 
-/* override bootstrap style */
 .modal-backdrop {
     --bs-backdrop-bg: #ffffff2b;
     --bs-backdrop-opacity: 1;
@@ -260,7 +343,6 @@ body>footer p {
     backdrop-filter: blur(4px);
 }
 
-/* override select2 style */
 .select2-container .select2-selection--single {
     height: 38px;
     padding: 6px;
@@ -276,7 +358,10 @@ body>footer p {
     height: 36px;
 }
 
-/* Media Query */
+.d-print {
+    display: none !important;
+}
+
 @media (width <=768px) {
     nav #burger-icon {
         display: unset;
@@ -297,5 +382,37 @@ body>footer p {
     #content {
         margin-left: 0;
     }
+}
 
+@media print {
+    .d-print {
+        display: unset !important;
+    }
+
+    aside,
+    footer,
+    nav,
+    .d-print-none {
+        display: none !important;
+    }
+
+    table,
+    body,
+    main,
+    #content,
+    .card,
+    .container {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        min-width: unset !important;
+        max-width: unset !important;
+    }
+
+    table tbody tr td input {
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        background-color: transparent !important;
+    }
 }

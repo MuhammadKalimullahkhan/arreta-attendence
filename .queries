@@ -1,0 +1,28 @@
+SpExample
+-- Description: Get leaves data for a specific date, designation, department, and company
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS `GetLeavesData`$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetLeavesData`(
+    IN `CurrentDateParam` DATETIME,
+    IN `DesignationIdParam` BIGINT UNSIGNED,
+    IN `DepartmentIdParam` BIGINT UNSIGNED,
+    IN `CompanyIdParam` BIGINT UNSIGNED
+)
+NOT DETERMINISTIC
+CONTAINS SQL
+SQL SECURITY DEFINER
+BEGIN
+    SELECT L.*, U.*
+    FROM leaves AS L
+    JOIN users AS U ON U.id = L.employee_id
+    WHERE DATE(L.created_at) = DATE(CurrentDateParam)
+      AND L.is_active = 1
+      AND (U.department_id = DepartmentIdParam OR DepartmentIdParam = 0)
+      AND (U.designation_id = DesignationIdParam OR DesignationIdParam = 0)
+      AND L.company_id = CompanyIdParam;
+END$$
+
+DELIMITER ;

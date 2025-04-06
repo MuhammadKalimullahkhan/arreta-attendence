@@ -7,25 +7,34 @@
                 Attendance Dashboard - {{ \Carbon\Carbon::now()->format('F Y') }}
             </h1>
         </div>
-        <div class="row">
+        <div class="row tiles">
             <div class="col-md-4">
-                <div class="card p-4">
-                    <div class="text-muted">Total Working Days</div>
-                    <div class="display-6 fw-bold my-2">{{ $totalWorkingDays }}</div>
+                <div class="card tile tile-primary">
+                    <div class="head">{{ $totalWorkingDays }}</div>
+                    <i class="card-icon fas fa-calendar-days"></i>
+                    <div class="title">Days</div>
+                    <div class="info-text">Total Working Days</div>
                 </div>
             </div>
+
             <div class="col-md-4">
-                <div class="card p-4">
-                    <div class="text-muted">Present Days</div>
-                    <div class="display-6 fw-bold my-2">{{ $presentDays }}</div>
+                <div class="card tile tile-success">
+                    <div class="head">{{ $presentDays }}</div>
+                    <i class="card-icon fas fa-user-check"></i>
+                    <div class="title">Days</div>
+                    <div class="info-text">Present Days</div>
                 </div>
             </div>
+
             <div class="col-md-4">
-                <div class="card p-4">
-                    <div class="text-muted">Absent Days</div>
-                    <div class="display-6 fw-bold my-2">{{ $absentDays }}</div>
+                <div class="card tile tile-danger">
+                    <div class="head">{{ $absentDays }}</div>
+                    <i class="card-icon fas fa-user-xmark"></i>
+                    <div class="title">Days</div>
+                    <div class="info-text">Absent Days</div>
                 </div>
             </div>
+
         </div>
     </section>
 

@@ -7,9 +7,6 @@
                 <small class="text-muted">List of all Employees Attendance</small>
             </h1>
 
-            <button type="button" class="btn btn-primary btn-sm" id="btn_save">
-                Save Attendicies
-            </button>
         </div>
         <div class="col-12">
             <div class="card parent">
@@ -35,15 +32,21 @@
                             </select>
                         </div>
                         <div class="col-2">
-                            <button id="filterUsers" class="btn btn-primary w-100">Filter</button>
+                            <button type="button" class="btn btn-primary w-100" id="btn_save" title="Save Attendance">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                Save
+                            </button>
                         </div>
                         <div id="error_employees" class="invalid"></div>
                         <div class="col-12 mt-3">
-                            <div class="table-responsive">
-                                @include('partials.attendance-table', [
-                                    'usersWithoutAttendance' => $usersWithoutAttendance,
-                                ])
-                            </div>
+                            <form action="{{ route('attendances.store') }}" method="post" id="myForm">
+                                @csrf
+                                <div class="table-responsive">
+                                    @include('partials.attendance-table', [
+                                        'usersWithoutAttendance' => $usersWithoutAttendance,
+                                    ])
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -55,6 +58,10 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
+            $('.select2').on('select2:select select2:unselect', function(e) {
+                fetchUsers();
+            });
+
             // Function to fetch users based on filters
             function fetchUsers() {
                 let departmentId = $("#departmentFilter").val();
@@ -96,7 +103,9 @@
                     success: function(response) {
                         if (response.success) {
                             successAlert("Success", response.message);
+                            $(".select2").val(null).trigger('change'); // Reset filters
                             fetchUsers(); // Reload users after successful submission
+
                         }
                     },
                     error: function(xhr) {
@@ -119,7 +128,6 @@
             }
 
             // Event bindings
-            $("#filterUsers").on("click", fetchUsers);
             $("#myForm").on("submit", function(e) {
                 e.preventDefault();
                 submitForm();

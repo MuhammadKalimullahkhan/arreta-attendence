@@ -1,6 +1,4 @@
-<button
-    class="dropdown-item text-success"
-    onclick="confirmAlert(event, ()=>openModal({{$id}}))">
-    <ion-icon name="create"></ion-icon>
+<button class="dropdown-item text-success" onclick="confirmAlert(event, ()=>openModal({{ $id }}))">
+    <i class="fa-solid fa-pencil"></i>
     Edit
 </button>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
+use App\Models\Leave;
 use App\Models\User;
 use App\Models\Department;
 use App\Models\Designation;
@@ -35,7 +36,7 @@ class AttendanceController extends Controller
         foreach ($request->employees as $employeeId => $status) {
             $user = User::find($employeeId); // Retrieve user to get designation & department
 
-            Attendance::create([
+            $newUser = Attendance::create([
                 'employee_id' => $user->id,
                 'designation_id' => $user->designation_id ?? null, // Get designation from user
                 'year_id' => now()->year,
@@ -48,6 +49,24 @@ class AttendanceController extends Controller
                 'entry_date' => now(),
                 'is_active' => true,
             ]);
+
+            if ($newUser->is_present == false) {
+                Leave::create([
+                    'employee_id' => $user->id,
+                    'designation_id' => $user->designation_id ?? null,
+                    'leave_type_id' => 2, // 2: Casual Leave (in leave_types table)
+                    'from_date' => now()->toDateString(),
+                    'number_of_days' => 1,
+                    'approval' => 0, // 0: Not Approved
+                    'approval_date' => null,
+                    'is_without_pay' => true, // Assuming this is a unpaid leave
+                    'company_id' => $user->company_id ?? 1,
+                    'entry_user_id' => auth()->id(),
+                    'entry_date' => now(),
+                    'is_active' => true,
+                ]);
+            }
+
         }
 
         return response()->json([

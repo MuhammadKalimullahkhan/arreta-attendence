@@ -19,9 +19,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
+
     <!-- icons -->
-    {{-- <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     {{-- Select 2 --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -41,22 +43,36 @@
         <div id="content">
             <nav>
                 <button id="burger-icon">
-                    <ion-icon name="menu-outline"></ion-icon>
+                    <i class="fa-solid fa-bars"></i>
                 </button>
 
                 <div class="ms-auto d-flex align-items-center">
                     <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            <ion-icon name="person-circle-outline"></ion-icon>
+                            <i class="fa-solid fa-user-circle"></i>
+                            <span class="visually-hidden">User</span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('users.profile') }}">
+                                    <i class="fa-solid fa-user me-2"></i>
+                                    Profile
+                                </a>
+                            </li>
+                            {{-- <li><a class="dropdown-item" href="#">Settings</a></li> --}}
+
+                            {{-- dropdown divider --}}
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
                             <li>
                                 <form action="{{ route('account.logout') }}" method="GET">
                                     @csrf
-                                    <button type="submit" class="dropdown-item">Logout</button>
+                                    <button type="submit" class="dropdown-item">
+                                        <i class="fa-solid fa-right-from-bracket me-2"></i>
+                                        Logout
+                                    </button>
                                 </form>
                             </li>
                         </ul>
@@ -69,7 +85,7 @@
         </div>
     </main>
 
-    <footer class="text-center text-muted">
+    <footer class="text-center text-muted p-4">
         <p>
             Developed By <a href="https://wazar.pk/" target="_blank">Wazar SS</a>
         </p>

@@ -8,7 +8,8 @@
                 <small class="text-muted">List of all departments</small>
             </h1>
 
-            <button class="btn btn-primary btn-sm" onclick="openModal(null)">
+            <button class="btn btn-primary" onclick="openModal(null)" title="Add New Department">
+                <i class="fa-solid fa-plus"></i>
                 Add Department
             </button>
         </div>

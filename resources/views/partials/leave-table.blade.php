@@ -8,27 +8,23 @@
         </tr>
     </thead>
     <tbody>
-        <form action="{{ route('leave.store') }}" method="post" id="myForm">
-            @csrf
-            @forelse ($usersWithAttendance as $user)
-                <tr>
-                    <td>
-                        <input type="hidden" name="employees[{{ $user->id }}]" value="casual">
-                        <input type="checkbox" name="employees[{{ $user->id }}]" value="paid"
-                            class="form-check-input" @checked(true) />
-                    </td>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->department->description }}</td>
-                    <td>{{ $user->designation->description }}</td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="4">
-                        <small class="d-block text-center text-muted">No employees found.</small>
-                    </td>
-                </tr>
-            @endforelse
-        </form>
-
+        @forelse ($absentUsers as $leave)
+            <tr>
+                <td>
+                    <input type="hidden" name="leaves_id[{{ $leave->id }}]" value="casual">
+                    <input type="checkbox" name="leaves_id[{{ $leave->id }}]" value="paid" class="form-check-input"
+                        @checked($leave->is_without_pay == false) />
+                </td>
+                <td>{{ $leave->name }}</td>
+                <td>{{ $leave->department }}</td>
+                <td>{{ $leave->designation }}</td>
+            </tr>
+        @empty
+            <tr>
+                <td colspan="4">
+                    <small class="d-block text-center text-muted">No employees found.</small>
+                </td>
+            </tr>
+        @endforelse
     </tbody>
 </table>

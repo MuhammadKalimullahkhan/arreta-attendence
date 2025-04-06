@@ -23,6 +23,12 @@ class Attendance extends Model
         'is_active',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'is_present' => 'boolean',
+        ];
+    }
     function employee(): BelongsTo
     {
         return $this->belongsTo(User::class, 'employee_id');

@@ -15,4 +15,9 @@ class RefPayHeadType extends Model
         'entry_date',
         'is_active',
     ];
+
+    public function payHeadType()
+    {
+        return $this->belongsTo(RefPayHeadType::class, 'ref_pay_head_type_id');
+    }
 }

@@ -54,6 +54,6 @@ Route::group(['prefix' => '/'], function () {
         Route::resource('/designation', DesignationController::class)->names('designations');
         Route::resource('/roles', RoleController::class)->names('roles');
         Route::resource('/pay-heads', PayHeadController::class)->names('pay-heads');
-        Route::resource('/pay-role', PayrollController::class)->names('payroll');
+        Route::resource('/pay-roll', PayrollController::class)->names('payroll');
     });
 });

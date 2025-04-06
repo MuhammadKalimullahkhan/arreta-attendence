@@ -8,8 +8,9 @@
                 <small class="text-muted">List of all role</small>
             </h1>
 
-            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#upsertModal"
-                onclick="openModal(null)">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#upsertModal"
+                onclick="openModal(null)" title="Add New Role">
+                <i class="fa-solid fa-plus"></i>
                 Add Role
             </button>
         </div>

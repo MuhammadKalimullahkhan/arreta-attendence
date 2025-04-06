@@ -6,8 +6,9 @@
                 Payhead
                 <small class="text-muted">List of all payhead</small>
             </h1>
-            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createModal"
-                onclick="openModal(null)">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal"
+                onclick="openModal(null)" title="Add New Pay Head">
+                <i class="fa-solid fa-plus"></i>
                 Add Pay Head
             </button>
         </div>
@@ -34,13 +35,15 @@
                                             <div class="dropdown">
                                                 <button class="btn btn-sm btn-outline-primary dropdown-toggle"
                                                     type="button" data-bs-toggle="dropdown">
-                                                    <ion-icon name="create"></ion-icon>
+                                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                    <span class="visually-hidden">Actions</span>
                                                 </button>
                                                 <ul class="dropdown-menu shadow-lg">
                                                     <li>
                                                         <button class="dropdown-item text-success"
                                                             onclick="confirmAlert(event, ()=>openModal({{ $payHead->id }}))">
-                                                            <ion-icon name="create"></ion-icon>
+                                                            <i class="fa-solid fa-pencil"></i>
+
                                                             Edit
                                                         </button>
                                                     </li>
