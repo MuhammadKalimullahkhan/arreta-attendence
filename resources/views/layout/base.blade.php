@@ -11,11 +11,11 @@
     <!-- styling -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
 
     <!-- Js -->
-    <script defer src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script defer src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
@@ -91,7 +91,7 @@
         </p>
     </footer>
 
-    <script src="/js/app.js"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     <script>
         // get CSRF from meta
         {{-- don't remove this, this is used by delete-button component --}}
