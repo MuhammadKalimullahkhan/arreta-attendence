@@ -13,7 +13,7 @@
                 <td>
                     <input type="hidden" name="leaves_id[{{ $leave->id }}]" value="casual">
                     <input type="checkbox" name="leaves_id[{{ $leave->id }}]" value="paid" class="form-check-input"
-                        @checked($leave->is_without_pay == false) />
+                        @checked($leave->paid_leave) />
                 </td>
                 <td>{{ $leave->name }}</td>
                 <td>{{ $leave->department }}</td>

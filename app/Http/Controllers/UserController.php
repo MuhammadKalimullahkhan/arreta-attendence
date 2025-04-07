@@ -268,6 +268,7 @@ class UserController extends Controller
         $attendances = Attendance::where('employee_id', $userId)
             ->whereMonth('date', $currentMonth)
             ->whereYear('date', $currentYear)
+            ->orderByDesc('created_at')
             ->get();
 
         $totalWorkingDays = $attendances->count();

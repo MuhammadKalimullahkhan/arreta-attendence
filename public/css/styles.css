@@ -318,22 +318,22 @@ body>footer p {
 .status-badge {
     padding: 0.25rem 0.75rem;
     border-radius: 1rem;
-    font-size: 0.875rem;
+    font-size: 0.75rem;
 }
 
 .status-success {
-    background: #e1f7e3;
-    color: #2ecc71;
+    background: rgba(var(--color-success), .13);
+    color: rgb(var(--color-success));
 }
 
 .status-warning {
-    background: #fff3e0;
-    color: #f39c12;
+    background: rgba(var(--color-warning), .13);
+    color: rgb(var(--color-warning))
 }
 
 .status-danger {
-    background: #ffe0e0;
-    color: #f31212;
+    background: rgba(var(--color-danger), .13);
+    color: rgb(var(--color-danger))
 }
 
 .modal-backdrop {
@@ -360,6 +360,11 @@ body>footer p {
 
 .d-print {
     display: none !important;
+}
+
+/* bootstrap overriding */
+.form-control {
+    min-width: 100px;
 }
 
 @media (width <=768px) {

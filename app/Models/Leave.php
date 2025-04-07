@@ -18,7 +18,7 @@ class Leave extends Model
         'number_of_days',
         'approval',
         'approval_date',
-        'is_without_pay',
+        'paid_leave',
         'company_id',
         'entry_user_id',
         'entry_date',

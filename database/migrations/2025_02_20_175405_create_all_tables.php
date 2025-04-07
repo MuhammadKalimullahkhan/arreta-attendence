@@ -98,7 +98,7 @@ return new class extends Migration {
             $table->integer('number_of_days');
             $table->string('approval')->nullable();
             $table->date('approval_date')->nullable();
-            $table->boolean('is_without_pay')->default(false);
+            $table->boolean('paid_leave')->default(false);
             $table->foreignId('company_id')->constrained('companies')->cascadeOnDelete();
             $table->unsignedBigInteger('entry_user_id');
             $table->timestamp('entry_date')->useCurrent();

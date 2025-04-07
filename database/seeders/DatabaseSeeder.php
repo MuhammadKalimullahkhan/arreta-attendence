@@ -108,7 +108,7 @@ class DatabaseSeeder extends Seeder
             'number_of_days' => 5,
             'approval' => 'Approved',
             'approval_date' => now()->toDateString(),
-            'is_without_pay' => false,
+            'paid_leave' => false,
             'company_id' => $companyId,
             'entry_user_id' => $userId,
             'entry_date' => now(),

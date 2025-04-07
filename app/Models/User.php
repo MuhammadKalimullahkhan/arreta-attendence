@@ -68,6 +68,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Leave::class, 'employee_id');
     }
+    public function attendance()
+    {
+        return $this->hasMany(Attendance::class, 'employee_id');
+    }
 
     /**
      * 🔹 Role Helper Methods (Avoid hardcoded strings in codebase)

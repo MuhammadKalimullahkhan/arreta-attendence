@@ -89,7 +89,7 @@
                                         <td>{{ $user->role->description ?? 'N/A' }}</td>
                                         <td>{{ $user->designation->description ?? 'N/A' }}</td>
                                         <td>
-                                            @if ($user->leaveQuota[0]->is_without_pay == false)
+                                            @if ($user->leaveQuota[0]->paid_leave == true)
                                                 <span class="status-badge status-warning">Paid Leave</span>
                                             @else
                                                 <span class="status-badge status-danger">Unpaid Leave</span>

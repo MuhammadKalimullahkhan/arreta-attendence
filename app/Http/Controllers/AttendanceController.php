@@ -59,7 +59,7 @@ class AttendanceController extends Controller
                     'number_of_days' => 1,
                     'approval' => 0, // 0: Not Approved
                     'approval_date' => null,
-                    'is_without_pay' => true, // Assuming this is a unpaid leave
+                    'paid_leave' => false, // Assuming this is a unpaid leave
                     'company_id' => $user->company_id ?? 1,
                     'entry_user_id' => auth()->id(),
                     'entry_date' => now(),

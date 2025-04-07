@@ -37,12 +37,15 @@ class DashboardController extends Controller
         $yesterdayAttendance = Attendance::whereDate('date', Carbon::yesterday())->where('is_present', true)->count();
         $attendanceChange = $yesterdayAttendance > 0 ? (($todayAttendance - $yesterdayAttendance) / $yesterdayAttendance) * 100 : 100;
 
-        $todayPaidLeave = Leave::whereDate('from_date', Carbon::today())->where('is_without_pay', false)->count();
-        $yesterdayPaidLeave = Leave::whereDate('from_date', Carbon::yesterday())->where('is_without_pay', false)->count();
+        $todayPaidLeave = Leave::whereDate('from_date', Carbon::today())->where('paid_leave', true)->count();
+        $yesterdayPaidLeave = Leave::whereDate('from_date', Carbon::yesterday())->where('paid_leave', true)->count();
         $paidLeaveChange = $yesterdayPaidLeave > 0 ? (($todayPaidLeave - $yesterdayPaidLeave) / $yesterdayPaidLeave) * 100 : 100;
 
         $absentUsers = User::whereIn('id', function ($query) {
-            $query->select('employee_id')->from('leaves')->whereDate('created_at', Carbon::today());
+            $query->select('employee_id')
+                ->from('attendances')
+                ->where("is_present", false)
+                ->whereDate('created_at', Carbon::today());
         })->get();
 
 

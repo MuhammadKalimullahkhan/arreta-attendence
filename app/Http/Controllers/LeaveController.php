@@ -47,7 +47,7 @@ class LeaveController extends Controller
                 'approval' => true,
                 'approval_date' => now(),
                 'entry_user_id' => auth()->user()->id,
-                'is_without_pay' => $leaveType === 'casual' ? true : false, // Assuming 'casual' means unpaid leave
+                'paid_leave' => $leaveType === 'paid' ? true : false, // Assuming paid leave
                 'leave_type_id' => $leaveType === 'casual' ? 2 : 4, // 2: Casual leave, 4: Paid Leave (in leave_types table)
             ]);
 
