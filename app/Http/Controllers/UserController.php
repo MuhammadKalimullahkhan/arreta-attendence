@@ -6,7 +6,7 @@ use App\Models\Attendance;
 use App\Models\Department;
 use App\Models\Designation;
 use App\Models\EmployeeSalarySetup;
-use App\Models\Leave;
+// use App\Models\Leave;
 use App\Models\LeaveType;
 use App\Models\RefPayHead;
 use App\Models\RefPayHeadType;
@@ -16,8 +16,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -67,9 +65,9 @@ class UserController extends Controller
             'payrollSetup.*.amount' => 'required|numeric',
 
             // Validate the leaveQuota array
-            'leaveQuota' => 'required|array',
-            'leaveQuota.*.leaveType' => 'required|integer|exists:leave_types,id',
-            'leaveQuota.*.days' => 'required|integer',
+            // 'leaveQuota' => 'required|array',
+            // 'leaveQuota.*.leaveType' => 'required|integer|exists:leave_types,id',
+            // 'leaveQuota.*.days' => 'required|integer',
         ]);
 
         DB::beginTransaction();
@@ -99,16 +97,16 @@ class UserController extends Controller
         }
 
         // Create Leaves
-        foreach ($request->leaveQuota as $leave) {
-            Leave::create([
-                'employee_id' => $user->id,
-                'designation_id' => $user->designation_id,
-                'number_of_days' => $leave["days"],
-                'leave_type_id' => $leave["leaveType"],
-                'company_id' => 1,
-                'entry_user_id' => auth()->id() ?? 1,
-            ]);
-        }
+        // foreach ($request->leaveQuota as $leave) {
+        //     Leave::create([
+        //         'employee_id' => $user->id,
+        //         'designation_id' => $user->designation_id,
+        //         'number_of_days' => $leave["days"],
+        //         'leave_type_id' => $leave["leaveType"],
+        //         'company_id' => 1,
+        //         'entry_user_id' => auth()->id() ?? 1,
+        //     ]);
+        // }
 
         DB::commit();
 
@@ -151,9 +149,9 @@ class UserController extends Controller
             'payrollSetup.*.payHead' => 'required|integer|exists:ref_pay_heads,id',
             'payrollSetup.*.headType' => 'required|integer|exists:ref_pay_head_types,id',
             'payrollSetup.*.amount' => 'required|numeric',
-            'leaveQuota' => 'required|array',
-            'leaveQuota.*.leaveType' => 'required|integer|exists:leave_types,id',
-            'leaveQuota.*.days' => 'required|integer',
+            // 'leaveQuota' => 'required|array',
+            // 'leaveQuota.*.leaveType' => 'required|integer|exists:leave_types,id',
+            // 'leaveQuota.*.days' => 'required|integer',
         ]);
 
         DB::beginTransaction();
@@ -195,26 +193,26 @@ class UserController extends Controller
             }
 
             // 🔹 **Remove leave quotas not present in request**
-            $leaveIds = collect($request->leaveQuota)->pluck('leaveType')->toArray();
-            Leave::where('employee_id', $user->id)
-                ->whereNotIn('leave_type_id', $leaveIds)
-                ->delete();
+            // $leaveIds = collect($request->leaveQuota)->pluck('leaveType')->toArray();
+            // Leave::where('employee_id', $user->id)
+            //     ->whereNotIn('leave_type_id', $leaveIds)
+            //     ->delete();
 
-            // 🔹 **Update or insert Leave Quota**
-            foreach ($request->leaveQuota as $leave) {
-                Leave::updateOrCreate(
-                    [
-                        'employee_id' => $user->id,
-                        'leave_type_id' => $leave["leaveType"],
-                    ],
-                    [
-                        'designation_id' => $user->designation_id,
-                        'number_of_days' => $leave["days"],
-                        'company_id' => 1,
-                        'entry_user_id' => auth()->id() ?? 1,
-                    ]
-                );
-            }
+            // // 🔹 **Update or insert Leave Quota**
+            // foreach ($request->leaveQuota as $leave) {
+            //     Leave::updateOrCreate(
+            //         [
+            //             'employee_id' => $user->id,
+            //             'leave_type_id' => $leave["leaveType"],
+            //         ],
+            //         [
+            //             'designation_id' => $user->designation_id,
+            //             'number_of_days' => $leave["days"],
+            //             'company_id' => 1,
+            //             'entry_user_id' => auth()->id() ?? 1,
+            //         ]
+            //     );
+            // }
 
             DB::commit();
 
